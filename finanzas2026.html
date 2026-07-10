@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Finanzas 2026 - Piedad</title>
+<title>Finanzas 2026</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -35,13 +35,9 @@ header .month-selector select { background: var(--surface2); color: var(--text);
 .tabs button:hover { color: var(--text); background: var(--surface2); }
 .tabs button.active { color: var(--green); background: var(--bg); font-weight: 600; }
 main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
-.tab-content { display: none; }
-.tab-content.active { display: block; animation: fadeIn .2s; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 h2 { font-size: 1.2rem; margin-bottom: 16px; color: var(--text); }
 h3 { font-size: 1rem; margin-bottom: 10px; color: var(--text2); }
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
-.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
 .form-group { margin-bottom: 14px; }
 .form-group label { display: block; font-size: 0.8rem; color: var(--text2); margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.95rem; font-family: inherit; }
@@ -82,28 +78,23 @@ td.red { color: var(--red); font-weight: 600; }
 .progress-fill.safe { background: var(--green); }
 .progress-fill.warn { background: var(--amber); }
 .progress-fill.danger { background: var(--red); }
-.toast { position: fixed; bottom: 20px; right: 20px; z-index: 999; padding: 14px 20px; border-radius: 8px; font-weight: 600; animation: slideIn .3s; max-width: 360px; }
+.toast { position: fixed; bottom: 20px; right: 20px; z-index: 999; padding: 14px 20px; border-radius: 8px; font-weight: 600; animation: slideIn .3s; max-width: 360px; font-size: .9rem; }
 .toast.success { background: var(--green2); color: #000; }
 .toast.error { background: var(--red2); color: #fff; }
+.toast.warning { background: var(--amber); color: #000; }
 @keyframes slideIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 200; display: flex; align-items: center; justify-content: center; }
-.modal { background: var(--surface); border-radius: var(--radius); padding: 24px; min-width: 360px; max-width: 90vw; max-height: 85vh; overflow-y: auto; border: 1px solid var(--border); }
-.modal h3 { margin-bottom: 16px; }
-.modal .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
 .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
 .tag-income { background: rgba(74,222,128,.2); color: var(--green); }
 .tag-expense { background: rgba(248,113,113,.2); color: var(--red); }
 .empty-state { text-align: center; padding: 40px 20px; color: var(--text2); }
 .empty-state .icon { font-size: 2.5rem; margin-bottom: 10px; }
-.sub-row { background: var(--surface2); }
-.sub-row td { font-size: 0.8rem; color: var(--text2); padding-left: 20px; }
 .category-block { border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; background: var(--surface2); }
 .category-block .cat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .category-block .cat-name { font-weight: 700; font-size: 0.95rem; }
 .category-block .sub-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .category-block .sub-tag { background: var(--surface); padding: 4px 10px; border-radius: 20px; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 4px; }
 .category-block .sub-tag .remove { cursor: pointer; color: var(--red); font-weight: bold; margin-left: 2px; }
-.inline-input { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; width: 100%; }
+.inline-input { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; width: 100%; font-family: inherit; }
 .budget-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
 .budget-row.header { color: var(--text2); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; }
 .account-pills { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -137,44 +128,12 @@ td.red { color: var(--red); font-weight: 600; }
   .budget-row { grid-template-columns: 1.5fr 1fr 1fr; }
 }
 </style>
-<script src="https://www.gstatic.com/firebasejs/11.7.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/11.7.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/11.7.0/firebase-firestore-compat.js"></script>
-<link rel="manifest" href="manifest.json">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Finanzas 2026">
-<meta name="theme-color" content="#0f0f14">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%230f0f14'/><text x='96' y='116' text-anchor='middle' font-size='90' fill='%234ade80'>$</text></svg>">
 </head>
 <body>
-<div id="authOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px">
-  <div style="text-align:center;max-width:380px;width:100%">
-    <div style="font-size:3rem;margin-bottom:8px">💰</div>
-    <h1 style="color:var(--green);margin-bottom:4px">Finanzas 2026</h1>
-    <p style="color:var(--text2);margin-bottom:20px;font-size:.9rem">Tus finanzas sincronizadas en todos tus dispositivos</p>
-    <div id="authForm">
-      <div class="form-group"><label>Email</label><input type="email" id="authEmail" placeholder="tu@email.com"></div>
-      <div class="form-group"><label>Contraseña</label><input type="password" id="authPass" placeholder="Mínimo 6 caracteres"></div>
-      <button class="btn btn-primary" onclick="doLogin()" style="width:100%;margin-bottom:8px">Iniciar Sesión</button>
-      <button class="btn btn-outline" onclick="doRegister()" style="width:100%;margin-bottom:8px">Crear Cuenta</button>
-      <div id="authError" style="color:var(--red);font-size:.8rem;margin-top:8px;min-height:20px"></div>
-      <div id="authInfo" style="color:var(--text2);font-size:.75rem;margin-top:12px">
-        <p>Crea una cuenta (email + contraseña).</p>
-        <p>Usa la misma en tu PC y tu iPhone.</p>
-        <p>Los datos se sincronizan automáticamente.</p>
-        <p style="margin-top:8px">⚠️ Antes debes <a href="https://console.firebase.google.com/project/finanzas-piti/authentication/providers" target="_blank" style="color:var(--blue)">activar Email/Password en Firebase</a></p>
-      </div>
-    </div>
-    <div id="authLoading" style="display:none;color:var(--green);padding:20px">Sincronizando tus datos...</div>
-  </div>
-</div>
 <header>
   <h1>Finanzas 2026</h1>
-  <div style="display:flex;align-items:center;gap:12px">
-    <div class="month-selector">
-    <button class="btn btn-sm btn-outline" onclick="changeMonth(-1)">◀</button>
+  <div class="month-selector">
+    <button class="btn btn-sm btn-outline" onclick="changeMonth(-1)">&#9664;</button>
     <select id="monthSelect" onchange="onMonthChange()">
       <option value="2026-01">Enero 2026</option><option value="2026-02">Febrero 2026</option>
       <option value="2026-03">Marzo 2026</option><option value="2026-04">Abril 2026</option>
@@ -183,13 +142,12 @@ td.red { color: var(--red); font-weight: 600; }
       <option value="2026-09">Septiembre 2026</option><option value="2026-10">Octubre 2026</option>
       <option value="2026-11">Noviembre 2026</option><option value="2026-12">Diciembre 2026</option>
     </select>
-    <button class="btn btn-sm btn-outline" onclick="changeMonth(1)">▶</button>
+    <button class="btn btn-sm btn-outline" onclick="changeMonth(1)">&#9654;</button>
   </div>
-  <button class="btn btn-sm btn-outline" onclick="doLogout()" title="Cerrar sesion">Salir</button>
 </header>
 <nav class="tabs" id="tabs">
-  <button data-tab="registrar" class="active">Registrar</button>
-  <button data-tab="dashboard">Dashboard</button>
+  <button data-tab="registrar">Registrar</button>
+  <button data-tab="dashboard" class="active">Dashboard</button>
   <button data-tab="planificacion">Planificacion</button>
   <button data-tab="proyeccion">Proyeccion Anual</button>
   <button data-tab="movimientos">Movimientos</button>
@@ -198,197 +156,9 @@ td.red { color: var(--red); font-weight: 600; }
 </nav>
 <main id="main"></main>
 <div id="toastContainer"></div>
-<div id="modalContainer"></div>
 <script>
 'use strict';
-
-// ===== Firebase Config & Sync =====
-const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyA2sXUYBPt83c9Cn8V3kBec3fcUjKl7Oc0",
-  authDomain: "finanzas-piti.firebaseapp.com",
-  projectId: "finanzas-piti",
-  storageBucket: "finanzas-piti.firebasestorage.app",
-  messagingSenderId: "849949233187",
-  appId: "1:849949233187:web:f235b9d9db67cff023e196"
-};
-
-let fb = null, fbDb = null, fbAuth = null, fbUid = null;
-let fbReady = false;
-let fbSyncTimeout = null;
-
-function showAuthOverlay(show, msg) {
-  const overlay = document.getElementById('authOverlay');
-  const form = document.getElementById('authForm');
-  const loading = document.getElementById('authLoading');
-  if (show) {
-    overlay.style.display = 'flex';
-    if (msg) { form.style.display = 'none'; loading.style.display = 'block'; loading.innerHTML = msg; }
-    else { form.style.display = 'block'; loading.style.display = 'none'; }
-  } else {
-    overlay.style.display = 'none';
-  }
-}
-
-function initFirebase() {
-  if (typeof firebase === 'undefined') { fbReady = false; return; }
-  try {
-    firebase.initializeApp(FIREBASE_CONFIG);
-    fbDb = firebase.firestore();
-    fbAuth = firebase.auth();
-    fb = firebase;
-    fbDb.enablePersistence({ synchronizeTabs: true }).catch(() => {});
-    fbAuth.onAuthStateChanged(user => {
-      if (fbSyncTimeout) clearTimeout(fbSyncTimeout);
-      if (user) {
-        fbUid = user.uid;
-        showAuthOverlay(true, '<p>Conectando...</p>');
-        pullFromFirestore().then(success => {
-          if (success) {
-            showAuthOverlay(true, '<p>Cargando tus datos...</p>');
-          }
-          fbReady = true;
-          if (!window._appStarted) { window._appStarted = true; startApp(); }
-          else renderCurrentTab();
-          showAuthOverlay(false);
-        });
-      } else {
-        showAuthOverlay(true);
-        fbUid = null; fbReady = false;
-      }
-    });
-  } catch(e) { fbReady = false; }
-}
-
-async function pullFromFirestore() {
-  if (!fbUid || !fbDb) return false;
-  try {
-    const docRef = fbDb.collection('users').doc(fbUid).collection('data').doc('state');
-    const doc = await Promise.race([docRef.get(), timeout(8000)]);
-    if (!doc || !doc.exists) {
-      // New user: push default state
-      await pushInitialState();
-      return true;
-    }
-    if (doc.exists && doc.data().updatedAt) {
-      const d = doc.data();
-      const localTS = LS_orig.get('syncedAt', 0);
-      const cloudTS = d.updatedAt ? d.updatedAt.toMillis() : 0;
-      if (cloudTS > localTS) {
-        if (d.categories) state.categories = d.categories;
-        if (d.accounts) state.accounts = d.accounts;
-        if (d.transactions) state.transactions = d.transactions;
-        if (d.budgets) state.budgets = d.budgets;
-        LS_orig.set('syncedAt', cloudTS);
-        saveLocal();
-      }
-    }
-    return true;
-  } catch(e) { return false; }
-}
-
-function timeout(ms) {
-  return new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms));
-}
-
-async function pushInitialState() {
-  try {
-    await fbDb.collection('users').doc(fbUid).collection('data').doc('state').set({
-      categories: DEFAULT_CATEGORIES,
-      accounts: ['Banco Santander', 'Banco de Chile', 'Mercado Pago'],
-      transactions: [],
-      budgets: {},
-      updatedAt: fb.firestore.FieldValue.serverTimestamp()
-    });
-    state.categories = JSON.parse(JSON.stringify(DEFAULT_CATEGORIES));
-    state.accounts = ['Banco Santander', 'Banco de Chile', 'Mercado Pago'];
-    state.transactions = [];
-    state.budgets = {};
-    saveLocal();
-  } catch(e) {}
-}
-
-async function pushToFirestore() {
-  if (!fbUid || !fbDb) return;
-  try {
-    await fbDb.collection('users').doc(fbUid).collection('data').doc('state').set({
-      categories: state.categories,
-      accounts: state.accounts,
-      transactions: state.transactions,
-      budgets: state.budgets,
-      updatedAt: fb.firestore.FieldValue.serverTimestamp()
-    }, { merge: true });
-    LS.set('syncedAt', Date.now());
-  } catch(e) { console.log('Sync delayed'); }
-}
-
-function doLogin() {
-  const email = document.getElementById('authEmail').value.trim();
-  const pass = document.getElementById('authPass').value;
-  if (!email || !pass) { document.getElementById('authError').textContent = 'Completa email y contraseña'; return; }
-  document.getElementById('authForm').style.display = 'none';
-  document.getElementById('authLoading').style.display = 'block';
-  fbAuth.signInWithEmailAndPassword(email, pass).catch(e => {
-    document.getElementById('authForm').style.display = 'block';
-    document.getElementById('authLoading').style.display = 'none';
-    document.getElementById('authError').textContent = getAuthError(e.code);
-  });
-}
-function doRegister() {
-  const email = document.getElementById('authEmail').value.trim();
-  const pass = document.getElementById('authPass').value;
-  if (!email || !pass) { document.getElementById('authError').textContent = 'Completa email y contraseña'; return; }
-  if (pass.length < 6) { document.getElementById('authError').textContent = 'Contraseña debe tener al menos 6 caracteres'; return; }
-  document.getElementById('authForm').style.display = 'none';
-  document.getElementById('authLoading').style.display = 'block';
-  fbAuth.createUserWithEmailAndPassword(email, pass).catch(e => {
-    document.getElementById('authForm').style.display = 'block';
-    document.getElementById('authLoading').style.display = 'none';
-    document.getElementById('authError').textContent = getAuthError(e.code);
-  });
-}
-function getAuthError(code) {
-  const map = { 'auth/email-already-in-use': 'Este email ya tiene cuenta', 'auth/invalid-email': 'Email no válido', 'auth/weak-password': 'Contraseña muy débil', 'auth/user-not-found': 'Cuenta no encontrada', 'auth/wrong-password': 'Contraseña incorrecta', 'auth/invalid-credential': 'Email o contraseña incorrectos', 'auth/too-many-requests': 'Demasiados intentos, espera un momento' };
-  return map[code] || 'Error: ' + code;
-}
-function doLogout() {
-  if (confirm('Cerrar sesión? Tus datos siguen en la nube.')) fbAuth.signOut();
-}
-
-function saveLocal() { LS.set('categories', state.categories); LS.set('transactions', state.transactions); LS.set('budgets', state.budgets); LS.set('accounts', state.accounts); }
-function saveAll() { saveLocal(); if (fbReady && fbUid) pushToFirestore(); }
-
-// Override LS.get to try Firebase first on critical reads
-const LS_orig = LS;
-function getStateSafe() {
-  state.categories = LS_orig.get('categories', null);
-  if (!state.categories) { state.categories = JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)); saveLocal(); }
-  state.transactions = LS_orig.get('transactions', []);
-  state.budgets = LS_orig.get('budgets', {});
-  state.accounts = LS_orig.get('accounts', null);
-  if (!state.accounts) { state.accounts = ['Banco Santander', 'Banco de Chile', 'Mercado Pago']; saveLocal(); }
-}
-
-function startApp() {
-  getStateSafe();
-  renderCurrentTab();
-}
-
-// Run Firebase init
-initFirebase();
-
-// If Firebase doesn't load (offline or blocked), fall back to local after 5s
-setTimeout(() => {
-  if (!window._appStarted && document.getElementById('authOverlay').style.display !== 'none') {
-    window._appStarted = true;
-    showAuthOverlay(false);
-    getStateSafe();
-    startApp();
-    fbReady = false;
-    toast('Modo sin conexion - datos locales', 'warning');
-  }
-}, 5000);
-
-// ===== Core App =====
+window.onerror = function(msg, url, line) { document.getElementById('main').innerHTML = '<div class="card"><h2>Error</h2><p style="color:var(--red)">'+msg+' (linea '+line+')</p><p style="color:var(--text2);font-size:.8rem">Recarga la pagina con Ctrl+Shift+R</p></div>'; return false; };
 
 const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const COLORS = ['#4ade80','#60a5fa','#f472b6','#fbbf24','#a78bfa','#22d3ee','#f87171','#fb923c','#34d399','#818cf8','#e879f9','#fcd34d','#38bdf8','#a3e635','#c084fc','#fda4af'];
@@ -405,10 +175,8 @@ const DEFAULT_CATEGORIES = [
 
 function uid() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 6); }
 function fmt(n) { return '$' + Number(n || 0).toLocaleString('es-CL'); }
-function parseFmt(s) { return parseInt((s||'').replace(/[^0-9-]/g,'')) || 0; }
-function monthKey(m, y) { const mi = MONTHS.indexOf(m); return `${y}-${String(mi+1).padStart(2,'0')}`; }
 function monthName(key) { const [y,m] = key.split('-'); return MONTHS[parseInt(m)-1] + ' ' + y; }
-function nowKey() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; }
+function nowKey() { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0'); }
 
 const LS = {
   get(k, def) { try { const v = localStorage.getItem('fnz_'+k); return v ? JSON.parse(v) : def; } catch(e) { return def; } },
@@ -416,24 +184,18 @@ const LS = {
 };
 
 let state = {
-  categories: null,
-  transactions: [],
-  budgets: {},
-  accounts: null,
+  categories: LS.get('categories', null),
+  transactions: LS.get('transactions', []),
+  budgets: LS.get('budgets', {}),
+  accounts: LS.get('accounts', null),
   currentMonth: nowKey(),
-  currentTab: 'registrar'
+  currentTab: 'dashboard'
 };
-function getAccountColor(i) { const cls = `acct-${i % 6}`; return cls; }
+if (!state.categories) { state.categories = JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)); LS.set('categories', state.categories); }
+if (!state.accounts) { state.accounts = ['Banco Santander', 'Banco de Chile', 'Mercado Pago']; LS.set('accounts', state.accounts); }
 
-function getAccountMovements(month, account) {
-  return getTxByMonth(month).filter(t => (t.account || state.accounts[0]) === account);
-}
-function getAccountIncome(month, account) {
-  return getAccountMovements(month, account).filter(t => t.type === 'income').reduce((s,t) => s + t.amount, 0);
-}
-function getAccountExpense(month, account) {
-  return getAccountMovements(month, account).filter(t => t.type === 'expense').reduce((s,t) => s + t.amount, 0);
-}
+function saveAll() { LS.set('categories', state.categories); LS.set('transactions', state.transactions); LS.set('budgets', state.budgets); LS.set('accounts', state.accounts); }
+function getAccountColor(i) { return 'acct-' + (i % 6); }
 
 function getTxByMonth(month) { return state.transactions.filter(t => t.date.startsWith(month)); }
 function getIncomeTotal(month) { return getTxByMonth(month).filter(t => t.type === 'income').reduce((s,t) => s + t.amount, 0); }
@@ -447,100 +209,66 @@ function getExpenseBySubcat(month) {
   });
   return map;
 }
-function getCategoryType(catName) { const c = state.categories.find(c => c.name === catName); return c ? c.type : 'expense'; }
 function getIncomeCategories() { return state.categories.filter(c => c.type === 'income'); }
 function getExpenseCategories() { return state.categories.filter(c => c.type === 'expense'); }
 function allExpenseSubcats() { let r = []; getExpenseCategories().forEach(c => c.subcategories.forEach(s => r.push({cat: c.name, sub: s}))); return r; }
 function allIncomeSubcats() { let r = []; getIncomeCategories().forEach(c => c.subcategories.forEach(s => r.push({cat: c.name, sub: s}))); return r; }
-function allSubcats(type) { return type === 'income' ? allIncomeSubcats() : allExpenseSubcats(); }
+
+function getAccountMovements(month, account) { return getTxByMonth(month).filter(t => (t.account || state.accounts[0]) === account); }
+function getAccountIncome(month, account) { return getAccountMovements(month, account).filter(t => t.type === 'income').reduce((s,t) => s + t.amount, 0); }
+function getAccountExpense(month, account) { return getAccountMovements(month, account).filter(t => t.type === 'expense').reduce((s,t) => s + t.amount, 0); }
 
 function toast(msg, type) {
-  const el = document.createElement('div'); el.className = 'toast ' + type; el.textContent = msg;
+  const el = document.createElement('div'); el.className = 'toast ' + (type||'success'); el.textContent = msg;
   document.getElementById('toastContainer').appendChild(el);
   setTimeout(() => el.remove(), 2800);
 }
 
-// ---------- SVG Charts ----------
 function pieChart(container, data) {
   const total = data.reduce((s,d) => s + d.value, 0);
-  if (total === 0) { container.innerHTML = '<div class="empty-state"><div class="icon">📊</div><p>Sin datos este mes</p></div>'; return; }
+  if (total === 0) { container.innerHTML = '<div class="empty-state"><div class="icon">&#128202;</div><p>Sin datos este mes</p></div>'; return; }
   const w = 220, h = 220, cx = w/2, cy = h/2, r = 90;
-  let svg = `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><g transform="translate(${cx},${cy})">`;
+  let svg = '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'"><g transform="translate('+cx+','+cy+')">';
   let angle = -Math.PI / 2;
   data.forEach((d, i) => {
     const slice = (d.value / total) * 2 * Math.PI;
     const x1 = Math.cos(angle) * r, y1 = Math.sin(angle) * r;
     const x2 = Math.cos(angle + slice) * r, y2 = Math.sin(angle + slice) * r;
     const large = slice > Math.PI ? 1 : 0;
-    const color = COLORS[i % COLORS.length];
-    svg += `<path d="M 0 0 L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z" fill="${color}" stroke="var(--surface2)" stroke-width="2"/>`;
+    svg += '<path d="M 0 0 L '+x1+' '+y1+' A '+r+' '+r+' 0 '+large+' 1 '+x2+' '+y2+' Z" fill="'+COLORS[i % COLORS.length]+'" stroke="var(--surface2)" stroke-width="2"/>';
     angle += slice;
   });
-  svg += `<circle r="50" fill="var(--surface2)"/><text text-anchor="middle" dy="-4" fill="var(--text)" font-size="14" font-weight="700">${fmt(total)}</text><text text-anchor="middle" dy="14" fill="var(--text2)" font-size="10">Total</text></g></svg>`;
+  svg += '<circle r="50" fill="var(--surface2)"/><text text-anchor="middle" dy="-4" fill="var(--text)" font-size="14" font-weight="700">'+fmt(total)+'</text><text text-anchor="middle" dy="14" fill="var(--text2)" font-size="10">Total</text></g></svg>';
   let legend = '<div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;">';
-  data.forEach((d, i) => {
-    const pct = total > 0 ? Math.round(d.value / total * 100) : 0;
-    legend += `<div style="font-size:.75rem;display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:${COLORS[i % COLORS.length]};display:inline-block"></span>${d.label}: ${fmt(d.value)} (${pct}%)</div>`;
-  });
+  data.forEach((d, i) => { const pct = total > 0 ? Math.round(d.value / total * 100) : 0; legend += '<div style="font-size:.75rem;display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:'+COLORS[i%COLORS.length]+';display:inline-block"></span>'+d.label+': '+fmt(d.value)+' ('+pct+'%)</div>'; });
   legend += '</div>';
   container.innerHTML = svg + legend;
 }
 
-// ---------- Render Tab Contents ----------
+// ---------- Registrar ----------
 function renderRegistrar() {
-  const cats = state.categories;
-  let formHtml = `<div class="card"><h2>Nuevo Movimiento</h2>
-    <div class="form-row">
-      <div class="form-group"><label>Tipo</label><select id="txType" onchange="onTxTypeChange()"><option value="expense">Gasto</option><option value="income">Ingreso</option></select></div>
-      <div class="form-group"><label>Categoria</label><select id="txCat" onchange="onTxCatChange()"></select></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label>Subcategoria</label><select id="txSub"></select></div>
-      <div class="form-group"><label>Monto ($)</label><input type="number" id="txAmount" placeholder="Ej: 50000" min="0" step="100"></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label>Fecha</label><input type="date" id="txDate"></div>
-      <div class="form-group"><label>Descripcion (opcional)</label><input type="text" id="txDesc" placeholder="Ej: Compra semanal"></div>
-    </div>
-    <div class="form-group"><label>Cuenta</label><div class="account-pills" id="acctPills"></div></div>
-    <button class="btn btn-primary" onclick="addTransaction()" style="width:100%;margin-top:8px;">Guardar Movimiento</button>
-  </div>`;
+  let html = '<div class="card"><h2>Nuevo Movimiento</h2><div class="form-row"><div class="form-group"><label>Tipo</label><select id="txType" onchange="onTxTypeChange()"><option value="expense">Gasto</option><option value="income">Ingreso</option></select></div><div class="form-group"><label>Categoria</label><select id="txCat" onchange="onTxCatChange()"></select></div></div><div class="form-row"><div class="form-group"><label>Subcategoria</label><select id="txSub"></select></div><div class="form-group"><label>Monto ($)</label><input type="number" id="txAmount" placeholder="Ej: 50000" min="0" step="100"></div></div><div class="form-row"><div class="form-group"><label>Fecha</label><input type="date" id="txDate"></div><div class="form-group"><label>Descripcion (opcional)</label><input type="text" id="txDesc" placeholder="Ej: Compra semanal"></div></div><div class="form-group"><label>Cuenta</label><div class="account-pills" id="acctPills"></div></div><button class="btn btn-primary" onclick="addTransaction()" style="width:100%;margin-top:8px;">Guardar Movimiento</button></div>';
   const d = new Date(); const today = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-  document.getElementById('main').innerHTML = formHtml;
+  document.getElementById('main').innerHTML = html;
   document.getElementById('txDate').value = today;
   renderAccountPills();
   onTxTypeChange();
 }
-
 function renderAccountPills() {
-  const container = document.getElementById('acctPills');
-  if (!container) return;
-  if (!window._selectedAccount || !state.accounts.includes(window._selectedAccount)) window._selectedAccount = state.accounts[0];
-  container.innerHTML = state.accounts.map((a,i) => {
-    const cls = getAccountColor(i);
-    const sel = a === window._selectedAccount ? ' selected' : '';
-    return `<span class="account-pill ${cls}${sel}" onclick="selectAccount(${i})">${a}</span>`;
-  }).join('');
+  const container = document.getElementById('acctPills'); if (!container) return;
+  if (!window._selAcct || !state.accounts.includes(window._selAcct)) window._selAcct = state.accounts[0];
+  container.innerHTML = state.accounts.map((a,i) => '<span class="account-pill '+getAccountColor(i)+(a===window._selAcct?' selected':'')+'" onclick="selectAccount('+i+')">'+a+'</span>').join('');
 }
-function selectAccount(i) {
-  window._selectedAccount = state.accounts[i];
-  renderAccountPills();
-}
-
+function selectAccount(i) { window._selAcct = state.accounts[i]; renderAccountPills(); }
 function onTxTypeChange() {
   const type = document.getElementById('txType').value;
-  const catSel = document.getElementById('txCat');
-  const cats = state.categories.filter(c => c.type === type);
-  catSel.innerHTML = cats.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+  document.getElementById('txCat').innerHTML = state.categories.filter(c => c.type === type).map(c => '<option value="'+c.name+'">'+c.name+'</option>').join('');
   onTxCatChange();
 }
 function onTxCatChange() {
-  const catName = document.getElementById('txCat').value;
-  const subSel = document.getElementById('txSub');
-  const cat = state.categories.find(c => c.name === catName);
-  subSel.innerHTML = cat ? cat.subcategories.map(s => `<option value="${s}">${s}</option>`).join('') : '';
+  const cat = state.categories.find(c => c.name === document.getElementById('txCat').value);
+  document.getElementById('txSub').innerHTML = cat ? cat.subcategories.map(s => '<option value="'+s+'">'+s+'</option>').join('') : '';
 }
-
 function addTransaction() {
   const type = document.getElementById('txType').value;
   const category = document.getElementById('txCat').value;
@@ -548,598 +276,277 @@ function addTransaction() {
   const amount = parseInt(document.getElementById('txAmount').value) || 0;
   const date = document.getElementById('txDate').value;
   const description = document.getElementById('txDesc').value;
-  const account = window._selectedAccount || state.accounts[0];
+  const account = window._selAcct || state.accounts[0];
   if (!category || !subcategory || amount <= 0) return toast('Completa categoria, subcategoria y monto', 'error');
   state.transactions.push({ id: uid(), type, category, subcategory, amount, date, description, account });
-  saveAll();
-  document.getElementById('txAmount').value = '';
-  document.getElementById('txDesc').value = '';
+  saveAll(); document.getElementById('txAmount').value = ''; document.getElementById('txDesc').value = '';
   toast('Movimiento guardado!', 'success');
 }
 
 // ---------- Dashboard ----------
 function renderDashboard() {
   const month = state.currentMonth;
-  const tx = getTxByMonth(month);
-  const income = getIncomeTotal(month);
-  const expense = getExpenseTotal(month);
-  const balance = income - expense;
-  const budgetTotal = getBudgetTotal(month);
-  const budgetUsed = expense;
-  const budgetPct = budgetTotal > 0 ? Math.round(budgetUsed / budgetTotal * 100) : 0;
+  const income = getIncomeTotal(month), expense = getExpenseTotal(month), balance = income - expense;
+  const budgetTotal = getBudgetTotal(month), budgetPct = budgetTotal > 0 ? Math.round(expense / budgetTotal * 100) : 0;
   const expenseMap = getExpenseBySubcat(month);
-
   let alerts = '';
-  if (budgetTotal > 0 && expense > budgetTotal) alerts += `<div class="alert alert-danger">Te pasaste del presupuesto! Presupuesto: ${fmt(budgetTotal)} vs Gasto: ${fmt(expense)} (${budgetPct}%)</div>`;
-  else if (budgetPct > 80) alerts += `<div class="alert alert-warning">Cuidado! Ya llevas ${budgetPct}% del presupuesto del mes</div>`;
-  if (balance < 0) alerts += `<div class="alert alert-danger">Saldo negativo: ${fmt(balance)}</div>`;
-
-  // Per-category budget alerts
+  if (budgetTotal > 0 && expense > budgetTotal) alerts += '<div class="alert alert-danger">Te pasaste del presupuesto! '+fmt(budgetTotal)+' vs '+fmt(expense)+' ('+budgetPct+'%)</div>';
+  else if (budgetPct > 80) alerts += '<div class="alert alert-warning">Cuidado! '+budgetPct+'% del presupuesto</div>';
+  if (balance < 0) alerts += '<div class="alert alert-danger">Saldo negativo: '+fmt(balance)+'</div>';
   allExpenseSubcats().forEach(sc => {
-    const key = sc.cat + '|' + sc.sub;
-    const spent = expenseMap[key] || 0;
-    const budget = (state.budgets[month] || {})[key] || 0;
-    if (budget > 0 && spent > budget) {
-      alerts += `<div class="alert alert-warning">${sc.cat} / ${sc.sub}: gastaste ${fmt(spent)} de ${fmt(budget)}</div>`;
-    }
+    const spent = expenseMap[sc.cat+'|'+sc.sub] || 0;
+    const budget = (state.budgets[month]||{})[sc.cat+'|'+sc.sub] || 0;
+    if (budget > 0 && spent > budget) alerts += '<div class="alert alert-warning">'+sc.cat+' / '+sc.sub+': '+fmt(spent)+' de '+fmt(budget)+'</div>';
   });
-
-  // Pie chart data
   const pieData = [];
-  allExpenseSubcats().forEach(sc => {
-    const key = sc.cat + '|' + sc.sub;
-    const val = expenseMap[key] || 0;
-    if (val > 0) pieData.push({ label: sc.cat + ' / ' + sc.sub, value: val });
+  allExpenseSubcats().forEach(sc => { const v = expenseMap[sc.cat+'|'+sc.sub]||0; if (v>0) pieData.push({label:sc.cat+' / '+sc.sub, value:v}); });
+  pieData.sort((a,b) => b.value-a.value);
+
+  // Build HTML
+  let html = '<h2>Dashboard - '+monthName(month)+'</h2>'+alerts+'<div class="metrics"><div class="metric"><div class="label">Ingresos</div><div class="value green">'+fmt(income)+'</div></div><div class="metric"><div class="label">Gastos</div><div class="value red">'+fmt(expense)+'</div></div><div class="metric"><div class="label">Saldo</div><div class="value '+(balance>=0?'green':'red')+'">'+fmt(balance)+'</div></div><div class="metric"><div class="label">Presupuesto</div><div class="value '+(budgetPct>100?'red':'green')+'">'+budgetPct+'%</div></div></div><div class="metrics">';
+  state.accounts.forEach((a,i) => {
+    const aInc = getAccountIncome(month,a), aExp = getAccountExpense(month,a), aBal = aInc-aExp;
+    html += '<div class="metric"><div class="account-info" style="justify-content:center"><span class="account-dot '+getAccountColor(i)+'"></span>'+a+'</div><div style="font-size:.8rem;margin-top:6px"><span style="color:var(--green)">'+fmt(aInc)+'</span> / <span style="color:var(--red)">'+fmt(aExp)+'</span></div><div class="value '+(aBal>=0?'green':'red')+'" style="font-size:1.2rem">'+fmt(aBal)+'</div></div>';
   });
-  pieData.sort((a,b) => b.value - a.value);
-
-  // Bar chart: last 6 months
-  const barMonths = [];
-  for (let i = 5; i >= 0; i--) {
-    const d = new Date(month + '-01');
-    d.setMonth(d.getMonth() - i);
-    const k = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
-    barMonths.push(k);
-  }
-  const barData = barMonths.map(k => ({
-    label: MONTHS[parseInt(k.split('-')[1])-1].substr(0,3),
-    value: getIncomeTotal(k),
-    color: '#4ade80'
-  }));
-  const barData2 = barMonths.map(k => ({
-    label: MONTHS[parseInt(k.split('-')[1])-1].substr(0,3),
-    value: getExpenseTotal(k),
-    color: '#f87171'
-  }));
-
-  document.getElementById('main').innerHTML = `
-    <h2>Dashboard - ${monthName(month)}</h2>
-    ${alerts}
-    <div class="metrics">
-      <div class="metric"><div class="label">Ingresos</div><div class="value green">${fmt(income)}</div></div>
-      <div class="metric"><div class="label">Gastos</div><div class="value red">${fmt(expense)}</div></div>
-      <div class="metric"><div class="label">Saldo</div><div class="value ${balance >= 0 ? 'green' : 'red'}">${fmt(balance)}</div></div>
-      <div class="metric"><div class="label">Presupuesto usado</div><div class="value ${budgetPct > 100 ? 'red' : 'green'}">${budgetPct}%</div></div>
-    </div>
-    <div class="metrics" style="margin-bottom:16px">
-      ${state.accounts.map((a, i) => {
-        const aInc = getAccountIncome(month, a);
-        const aExp = getAccountExpense(month, a);
-        const aBal = aInc - aExp;
-        const cls = getAccountColor(i);
-        return `<div class="metric"><div class="account-info" style="justify-content:center"><span class="account-dot ${cls}"></span>${a}</div><div style="font-size:.8rem;margin-top:6px"><span style="color:var(--green)">${fmt(aInc)}</span> / <span style="color:var(--red)">${fmt(aExp)}</span></div><div class="value ${aBal >= 0 ? 'green' : 'red'}" style="font-size:1.2rem">${fmt(aBal)}</div></div>`;
-      }).join('')}
-    </div>
-    <div class="charts-row">
-      <div class="chart-container"><h3 style="margin-bottom:8px">Gastos por categoria</h3><div id="pieChart"></div></div>
-      <div class="chart-container"><h3 style="margin-bottom:8px">Ingresos vs Gastos</h3><div id="barChart1" class="bar-chart-container"></div></div>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <h3>Desglose con presupuesto</h3>
-      <div id="budgetProgress"></div>
-    </div>`;
+  html += '</div><div class="charts-row"><div class="chart-container"><h3 style="margin-bottom:8px">Gastos por categoria</h3><div id="pieChart"></div></div><div class="chart-container"><h3 style="margin-bottom:8px">Ingresos vs Gastos</h3><div id="barChart1" class="bar-chart-container"></div></div></div><div class="card" style="margin-top:16px"><h3>Desglose con presupuesto</h3><div id="budgetProgress"></div></div>';
+  document.getElementById('main').innerHTML = html;
 
   pieChart(document.getElementById('pieChart'), pieData);
 
+  const barMonths = [];
+  for (let i = 5; i >= 0; i--) { const d = new Date(month+'-01'); d.setMonth(d.getMonth()-i); barMonths.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')); }
   const barContainer = document.getElementById('barChart1');
   const bw = Math.min(700, barContainer.parentElement.clientWidth - 32);
-  const combined = barMonths.map((k,i) => [
-    { label: barData[i].label, value: barData[i].value, color: barData[i].color },
-    { label: '', value: barData2[i].value, color: barData2[i].color }
-  ]).flat();
-
-  // Stacked bars for income vs expense
-  let svgW = bw, svgH = 240;
-  let pad = { top: 10, bottom: 40, left: 55, right: 10 };
-  let cw = svgW - pad.left - pad.right, ch = svgH - pad.top - pad.bottom;
-  let allVals = barMonths.map(k => [getIncomeTotal(k), getExpenseTotal(k)]).flat();
-  let maxV = Math.max(...allVals) * 1.2 || 1;
-  let barGap = Math.max(10, cw / barMonths.length * 0.3);
-  let barW2 = (cw - barGap * (barMonths.length - 1)) / barMonths.length / 2;
-
-  let svg = `<svg width="${svgW}" height="${svgH}" viewBox="0 0 ${svgW} ${svgH}" style="max-width:100%">`;
-  svg += `<line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${svgH-pad.bottom}" stroke="var(--border)"/>`;
-  svg += `<line x1="${pad.left}" y1="${svgH-pad.bottom}" x2="${svgW-pad.right}" y2="${svgH-pad.bottom}" stroke="var(--border)"/>`;
-  for (let i = 0; i <= 4; i++) {
-    let y = pad.top + (ch/4)*i, val = Math.round(maxV - (maxV/4)*i);
-    svg += `<line x1="${pad.left}" y1="${y}" x2="${svgW-pad.right}" y2="${y}" stroke="var(--border)" stroke-dasharray="3,3"/>`;
-    svg += `<text x="${pad.left-6}" y="${y+4}" text-anchor="end" fill="var(--text2)" font-size="10">${val>1000?Math.round(val/1000)+'k':val}</text>`;
-  }
+  let svgW = bw, svgH = 240, pad = {top:10,bottom:40,left:55,right:10};
+  let cw = svgW-pad.left-pad.right, ch = svgH-pad.top-pad.bottom;
+  let allV = []; barMonths.forEach(k => { allV.push(getIncomeTotal(k)); allV.push(getExpenseTotal(k)); });
+  let maxV = Math.max(...allV)*1.2||1;
+  let barGap = Math.max(10, cw/barMonths.length*0.3);
+  let barW2 = (cw-barGap*(barMonths.length-1))/barMonths.length/2;
+  let svg = '<svg width="'+svgW+'" height="'+svgH+'" viewBox="0 0 '+svgW+' '+svgH+'" style="max-width:100%">';
+  svg += '<line x1="'+pad.left+'" y1="'+pad.top+'" x2="'+pad.left+'" y2="'+(svgH-pad.bottom)+'" stroke="var(--border)"/>';
+  svg += '<line x1="'+pad.left+'" y1="'+(svgH-pad.bottom)+'" x2="'+(svgW-pad.right)+'" y2="'+(svgH-pad.bottom)+'" stroke="var(--border)"/>';
+  for (let i=0;i<=4;i++) { let y=pad.top+(ch/4)*i, val=Math.round(maxV-(maxV/4)*i); svg+='<line x1="'+pad.left+'" y1="'+y+'" x2="'+(svgW-pad.right)+'" y2="'+y+'" stroke="var(--border)" stroke-dasharray="3,3"/>'; svg+='<text x="'+(pad.left-6)+'" y="'+(y+4)+'" text-anchor="end" fill="var(--text2)" font-size="10">'+(val>1000?Math.round(val/1000)+'k':val)+'</text>'; }
   barMonths.forEach((k,i) => {
-    let xBase = pad.left + i * (cw / barMonths.length) + (cw / barMonths.length - barW2 * 2 - barGap) / 2;
-    let incH = (getIncomeTotal(k) / maxV) * ch, expH = (getExpenseTotal(k) / maxV) * ch;
-    let incY = svgH - pad.bottom - incH, expY = svgH - pad.bottom - expH;
-    svg += `<rect x="${xBase}" y="${incY}" width="${barW2}" height="${incH}" rx="2" fill="#4ade80" opacity="0.85"/>`;
-    svg += `<rect x="${xBase + barW2 + barGap}" y="${expY}" width="${barW2}" height="${expH}" rx="2" fill="#f87171" opacity="0.85"/>`;
-    svg += `<text x="${xBase + barW2 + barGap/2}" y="${svgH - pad.bottom + 16}" text-anchor="middle" fill="var(--text2)" font-size="10">${barData[i].label}</text>`;
+    let xBase=pad.left+i*(cw/barMonths.length)+(cw/barMonths.length-barW2*2-barGap)/2;
+    let incH=(getIncomeTotal(k)/maxV)*ch, expH=(getExpenseTotal(k)/maxV)*ch;
+    svg+='<rect x="'+xBase+'" y="'+(svgH-pad.bottom-incH)+'" width="'+barW2+'" height="'+incH+'" rx="2" fill="#4ade80" opacity="0.85"/>';
+    svg+='<rect x="'+(xBase+barW2+barGap)+'" y="'+(svgH-pad.bottom-expH)+'" width="'+barW2+'" height="'+expH+'" rx="2" fill="#f87171" opacity="0.85"/>';
+    svg+='<text x="'+(xBase+barW2+barGap/2)+'" y="'+(svgH-pad.bottom+16)+'" text-anchor="middle" fill="var(--text2)" font-size="10">'+MONTHS[parseInt(k.split('-')[1])-1].substr(0,3)+'</text>';
   });
-  let legX = svgW - 130;
-  svg += `<rect x="${legX}" y="5" width="10" height="10" rx="2" fill="#4ade80" opacity="0.85"/><text x="${legX+14}" y="13" fill="var(--text2)" font-size="10">Ingresos</text>`;
-  svg += `<rect x="${legX}" y="20" width="10" height="10" rx="2" fill="#f87171" opacity="0.85"/><text x="${legX+14}" y="28" fill="var(--text2)" font-size="10">Gastos</text>`;
-  svg += '</svg>';
+  svg+='<rect x="'+(svgW-130)+'" y="5" width="10" height="10" rx="2" fill="#4ade80" opacity="0.85"/><text x="'+(svgW-116)+'" y="13" fill="var(--text2)" font-size="10">Ingresos</text>';
+  svg+='<rect x="'+(svgW-130)+'" y="20" width="10" height="10" rx="2" fill="#f87171" opacity="0.85"/><text x="'+(svgW-116)+'" y="28" fill="var(--text2)" font-size="10">Gastos</text>';
+  svg+='</svg>';
   barContainer.innerHTML = svg;
 
-  // Budget progress bars
-  let progHtml = '';
+  // Budget progress
+  let prog = '';
   allExpenseSubcats().forEach(sc => {
-    const key = sc.cat + '|' + sc.sub;
-    const spent = expenseMap[key] || 0;
-    const budget = (state.budgets[month] || {})[key] || 0;
-    if (budget > 0 || spent > 0) {
-      const pct = budget > 0 ? Math.round(spent / budget * 100) : (spent > 0 ? 100 : 0);
-      const cls = pct > 100 ? 'danger' : (pct > 80 ? 'warn' : 'safe');
-      progHtml += `<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:.8rem"><span>${sc.cat} / ${sc.sub}</span><span>${fmt(spent)} ${budget > 0 ? '/ ' + fmt(budget) : ''} (${pct}%)</span></div><div class="progress-bar"><div class="progress-fill ${cls}" style="width:${Math.min(pct, 100)}%"></div></div></div>`;
-    }
+    const k = sc.cat+'|'+sc.sub, spent = expenseMap[k]||0, budget = (state.budgets[month]||{})[k]||0;
+    if (budget>0||spent>0) { const pct=budget>0?Math.round(spent/budget*100):(spent>0?100:0); prog+='<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:.8rem"><span>'+sc.cat+' / '+sc.sub+'</span><span>'+fmt(spent)+(budget>0?' / '+fmt(budget):'')+' ('+pct+'%)</span></div><div class="progress-bar"><div class="progress-fill '+(pct>100?'danger':(pct>80?'warn':'safe'))+'" style="width:'+Math.min(pct,100)+'%"></div></div></div>'; }
   });
-  document.getElementById('budgetProgress').innerHTML = progHtml || '<div class="empty-state"><p>Sin presupuesto definido para este mes. Ve a Planificacion para configurarlo.</p></div>';
+  document.getElementById('budgetProgress').innerHTML = prog || '<div class="empty-state"><p>Sin presupuesto. Ve a Planificacion.</p></div>';
 }
 
 // ---------- Planificacion ----------
 function renderPlanificacion() {
-  const month = state.currentMonth;
-  const items = allExpenseSubcats();
-  let html = `<div class="card"><h2>Planificacion - ${monthName(month)}</h2>
-    <p style="color:var(--text2);margin-bottom:12px;font-size:.85rem">Define tu presupuesto para cada subcategoria este mes</p>
-    <button class="btn btn-sm btn-outline" onclick="copyPreviousBudget()" style="margin-bottom:14px">Copiar presupuesto del mes anterior</button>
-    <div class="budget-row header"><span>Subcategoria</span><span>Presupuesto ($)</span><span>Gasto Real</span></div>`;
-  const expenseMap = getExpenseBySubcat(month);
+  const month = state.currentMonth, items = allExpenseSubcats(), expenseMap = getExpenseBySubcat(month);
+  let html = '<div class="card"><h2>Planificacion - '+monthName(month)+'</h2><p style="color:var(--text2);margin-bottom:12px;font-size:.85rem">Define tu presupuesto por subcategoria</p><button class="btn btn-sm btn-outline" onclick="copyPreviousBudget()" style="margin-bottom:14px">Copiar del mes anterior</button><div class="budget-row header"><span>Subcategoria</span><span>Presupuesto ($)</span><span>Gasto Real</span></div>';
   items.forEach(sc => {
-    const key = sc.cat + '|' + sc.sub;
-    const budget = (state.budgets[month] || {})[key] || 0;
-    const spent = expenseMap[key] || 0;
-    html += `<div class="budget-row">
-      <span style="font-size:.85rem">${sc.cat} / ${sc.sub}</span>
-      <input type="number" class="inline-input" id="budget_${key.replace(/[^a-zA-Z0-9]/g,'_')}" value="${budget || ''}" placeholder="0" onchange="saveBudget('${key}')">
-      <span style="font-size:.8rem;color:${spent > budget && budget > 0 ? 'var(--red)' : 'var(--text2)'}">${fmt(spent)}</span>
-    </div>`;
+    const k = sc.cat+'|'+sc.sub, budget = (state.budgets[month]||{})[k]||0, spent = expenseMap[k]||0;
+    html += '<div class="budget-row"><span style="font-size:.85rem">'+sc.cat+' / '+sc.sub+'</span><input type="number" class="inline-input" id="budget_'+k.replace(/[^a-zA-Z0-9]/g,'_')+'" value="'+(budget||'')+'" placeholder="0" onchange="saveBudget(\''+k+'\')" style="font-family:inherit"><span style="font-size:.8rem;color:'+(spent>budget&&budget>0?'var(--red)':'var(--text2)')+'">'+fmt(spent)+'</span></div>';
   });
-  html += `<button class="btn btn-primary" style="margin-top:12px;width:100%" onclick="saveAllBudgets()">Guardar Presupuestos</button></div>`;
+  html += '<button class="btn btn-primary" style="margin-top:12px;width:100%" onclick="saveAllBudgets()">Guardar Presupuestos</button></div>';
   document.getElementById('main').innerHTML = html;
 }
-
 function copyPreviousBudget() {
-  const month = state.currentMonth;
-  const prevKey = getPrevMonthKey(month);
-  if (!state.budgets[prevKey]) return toast('No hay presupuesto del mes anterior para copiar', 'error');
-  state.budgets[month] = JSON.parse(JSON.stringify(state.budgets[prevKey]));
-  saveAll();
-  renderPlanificacion();
-  toast('Presupuesto copiado del mes anterior!', 'success');
+  const month = state.currentMonth, prevKey = getPrevMonthKey(month);
+  if (!state.budgets[prevKey]) return toast('No hay presupuesto del mes anterior', 'error');
+  state.budgets[month] = JSON.parse(JSON.stringify(state.budgets[prevKey])); saveAll(); renderPlanificacion();
+  toast('Copiado del mes anterior!', 'success');
 }
-function getPrevMonthKey(key) {
-  const d = new Date(key + '-01');
-  d.setMonth(d.getMonth() - 1);
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
-}
+function getPrevMonthKey(key) { const d = new Date(key+'-01'); d.setMonth(d.getMonth()-1); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
 function saveBudget(key) {
-  const month = state.currentMonth;
-  const elId = 'budget_' + key.replace(/[^a-zA-Z0-9]/g,'_');
-  const el = document.getElementById(elId);
+  const el = document.getElementById('budget_' + key.replace(/[^a-zA-Z0-9]/g,'_'));
   if (!el) return;
-  const val = parseInt(el.value) || 0;
-  if (!state.budgets[month]) state.budgets[month] = {};
-  state.budgets[month][key] = val;
+  if (!state.budgets[state.currentMonth]) state.budgets[state.currentMonth] = {};
+  state.budgets[state.currentMonth][key] = parseInt(el.value) || 0;
 }
 function saveAllBudgets() {
   const month = state.currentMonth;
-  const items = allExpenseSubcats();
   if (!state.budgets[month]) state.budgets[month] = {};
-  items.forEach(sc => {
-    const key = sc.cat + '|' + sc.sub;
-    const elId = 'budget_' + key.replace(/[^a-zA-Z0-9]/g,'_');
-    const el = document.getElementById(elId);
-    if (el) state.budgets[month][key] = parseInt(el.value) || 0;
-  });
-  saveAll();
-  toast('Presupuestos guardados!', 'success');
+  allExpenseSubcats().forEach(sc => { const k = sc.cat+'|'+sc.sub, el = document.getElementById('budget_'+k.replace(/[^a-zA-Z0-9]/g,'_')); if (el) state.budgets[month][k] = parseInt(el.value)||0; });
+  saveAll(); toast('Presupuestos guardados!', 'success');
 }
 
-// ---------- Proyeccion Anual ----------
+// ---------- Proyeccion ----------
 function renderProyeccion() {
   const year = state.currentMonth.split('-')[0];
-  let html = `<div class="card"><h2>Proyeccion Anual ${year}</h2>
-    <table><thead><tr><th>Mes</th><th>Ingresos</th><th>Gastos</th><th>Saldo</th><th>Saldo Acumulado</th><th>Presupuesto</th><th>% Usado</th></tr></thead><tbody>`;
+  let html = '<div class="card"><h2>Proyeccion Anual '+year+'</h2><table><thead><tr><th>Mes</th><th>Ingresos</th><th>Gastos</th><th>Saldo</th><th>Saldo Acum</th><th>Presup</th><th>%</th></tr></thead><tbody>';
   let acum = 0;
-  for (let m = 1; m <= 12; m++) {
-    const key = year + '-' + String(m).padStart(2,'0');
-    const inc = getIncomeTotal(key);
-    const exp = getExpenseTotal(key);
-    const saldo = inc - exp;
-    acum += saldo;
-    const budg = getBudgetTotal(key);
-    const pct = budg > 0 ? Math.round(exp / budg * 100) : '-';
-    const hasData = inc > 0 || exp > 0 || budg > 0;
-    html += `<tr>
-      <td><strong>${MONTHS[m-1]}</strong></td>
-      <td class="right">${fmt(inc)}</td>
-      <td class="right ${exp > 0 ? 'red' : ''}">${fmt(exp)}</td>
-      <td class="right ${saldo >= 0 ? 'green' : 'red'}">${fmt(saldo)}</td>
-      <td class="right ${acum >= 0 ? 'green' : 'red'}">${fmt(acum)}</td>
-      <td class="right">${fmt(budg)}</td>
-      <td class="right ${pct !== '-' && pct > 100 ? 'red' : (pct !== '-' && pct > 80 ? '' : 'green')}">${pct}${pct !== '-' ? '%' : ''}</td>
-    </tr>`;
+  for (let m=1;m<=12;m++) {
+    const key = year+'-'+String(m).padStart(2,'0'), inc = getIncomeTotal(key), exp = getExpenseTotal(key), saldo = inc-exp; acum += saldo;
+    const budg = getBudgetTotal(key), pct = budg>0?Math.round(exp/budg*100):'-';
+    html += '<tr><td><strong>'+MONTHS[m-1]+'</strong></td><td class="right">'+fmt(inc)+'</td><td class="right '+(exp>0?'red':'')+'">'+fmt(exp)+'</td><td class="right '+(saldo>=0?'green':'red')+'">'+fmt(saldo)+'</td><td class="right '+(acum>=0?'green':'red')+'">'+fmt(acum)+'</td><td class="right">'+fmt(budg)+'</td><td class="right '+(pct!=='-'&&pct>100?'red':(pct!=='-'&&pct>80?'':'green'))+'">'+pct+(pct!=='-'?'%':'')+'</td></tr>';
   }
-  html += `<tr style="font-weight:700;background:var(--surface2)"><td>TOTAL ANUAL</td><td class="right green">${fmt(getYearTotal(year,'income'))}</td><td class="right red">${fmt(getYearTotal(year,'expense'))}</td><td class="right" style="color:${acum>=0?'var(--green)':'var(--red)'}">${fmt(acum)}</td><td colspan="3"></td></tr>`;
-  html += '</tbody></table></div>';
-
-  // Resumen por cuenta
+  html += '<tr style="font-weight:700;background:var(--surface2)"><td>TOTAL</td><td class="right green">'+fmt(getYearTotal(year,'income'))+'</td><td class="right red">'+fmt(getYearTotal(year,'expense'))+'</td><td class="right" style="color:'+(acum>=0?'var(--green)':'var(--red)')+'">'+fmt(acum)+'</td><td colspan="3"></td></tr></tbody></table></div>';
+  // Cuentas
   html += '<div class="card"><h3>Resumen Anual por Cuenta</h3><table><thead><tr><th>Cuenta</th><th>Ingresos</th><th>Gastos</th><th>Saldo</th></tr></thead><tbody>';
-  state.accounts.forEach((a,i) => {
-    let aInc = 0, aExp = 0;
-    for (let m = 1; m <= 12; m++) {
-      const key = year + '-' + String(m).padStart(2,'0');
-      aInc += getAccountIncome(key, a);
-      aExp += getAccountExpense(key, a);
-    }
-    const aBal = aInc - aExp;
-    const cls = getAccountColor(i);
-    html += `<tr><td><span class="account-dot ${cls}"></span> ${a}</td><td class="right green">${fmt(aInc)}</td><td class="right red">${fmt(aExp)}</td><td class="right" style="color:${aBal>=0?'var(--green)':'var(--red)'}">${fmt(aBal)}</td></tr>`;
-  });
+  state.accounts.forEach((a,i) => { let aInc=0,aExp=0; for(let m=1;m<=12;m++){const k=year+'-'+String(m).padStart(2,'0');aInc+=getAccountIncome(k,a);aExp+=getAccountExpense(k,a);} html+='<tr><td><span class="account-dot '+getAccountColor(i)+'"></span> '+a+'</td><td class="right green">'+fmt(aInc)+'</td><td class="right red">'+fmt(aExp)+'</td><td class="right" style="color:'+((aInc-aExp)>=0?'var(--green)':'var(--red)')+'">'+fmt(aInc-aExp)+'</td></tr>'; });
   html += '</tbody></table></div>';
-
-  // Full year bar chart
-  const barData = [];
-  for (let m = 1; m <= 12; m++) {
-    const key = year + '-' + String(m).padStart(2,'0');
-    barData.push({ label: MONTHS[m-1].substr(0,3), value: getIncomeTotal(key), color: '#4ade80' });
-  }
-  const barData2 = [];
-  for (let m = 1; m <= 12; m++) {
-    const key = year + '-' + String(m).padStart(2,'0');
-    barData2.push({ label: MONTHS[m-1].substr(0,3), value: getExpenseTotal(key), color: '#f87171' });
-  }
-
-  html += '<div class="card"><h3>Ingresos vs Gastos - Todo el Año</h3><div id="annualBarChart" class="bar-chart-container"></div></div>';
+  // Annual bar chart
+  html += '<div class="card"><h3>Ingresos vs Gastos - Todo el Ano</h3><div id="annualBarChart" class="bar-chart-container"></div></div>';
   document.getElementById('main').innerHTML = html;
-
-  // Render annual bar chart
-  const container = document.getElementById('annualBarChart');
-  const bw2 = Math.min(900, container.parentElement.clientWidth - 32);
-  const barMonths2 = [];
-  for (let m = 1; m <= 12; m++) barMonths2.push(year + '-' + String(m).padStart(2,'0'));
-
-  let svgW2 = bw2, svgH2 = 240;
-  let pad2 = { top: 10, bottom: 40, left: 55, right: 10 };
-  let cw2 = svgW2 - pad2.left - pad2.right, ch2 = svgH2 - pad2.top - pad2.bottom;
-  let allV2 = [];
-  barMonths2.forEach(k => { allV2.push(getIncomeTotal(k)); allV2.push(getExpenseTotal(k)); });
-  let maxV2 = Math.max(...allV2) * 1.2 || 1;
-  let barGap2 = Math.max(4, cw2 / 12 * 0.3);
-  let barW_2 = (cw2 - barGap2 * 11) / 12 / 2;
-
-  let svg2 = `<svg width="${svgW2}" height="${svgH2}" viewBox="0 0 ${svgW2} ${svgH2}" style="max-width:100%">`;
-  svg2 += `<line x1="${pad2.left}" y1="${pad2.top}" x2="${pad2.left}" y2="${svgH2-pad2.bottom}" stroke="var(--border)"/>`;
-  svg2 += `<line x1="${pad2.left}" y1="${svgH2-pad2.bottom}" x2="${svgW2-pad2.right}" y2="${svgH2-pad2.bottom}" stroke="var(--border)"/>`;
-  for (let i = 0; i <= 4; i++) {
-    let y = pad2.top + (ch2/4)*i, val = Math.round(maxV2 - (maxV2/4)*i);
-    svg2 += `<line x1="${pad2.left}" y1="${y}" x2="${svgW2-pad2.right}" y2="${y}" stroke="var(--border)" stroke-dasharray="3,3"/>`;
-    svg2 += `<text x="${pad2.left-6}" y="${y+4}" text-anchor="end" fill="var(--text2)" font-size="10">${val>1000?Math.round(val/1000)+'k':val}</text>`;
-  }
-  barMonths2.forEach((k,i) => {
-    let xBase = pad2.left + i * (cw2 / 12) + (cw2 / 12 - barW_2 * 2 - barGap2) / 2;
-    let incH = (getIncomeTotal(k) / maxV2) * ch2, expH = (getExpenseTotal(k) / maxV2) * ch2;
-    let incY = svgH2 - pad2.bottom - incH, expY = svgH2 - pad2.bottom - expH;
-    svg2 += `<rect x="${xBase}" y="${incY}" width="${barW_2}" height="${incH}" rx="2" fill="#4ade80" opacity="0.85"/>`;
-    svg2 += `<rect x="${xBase + barW_2 + barGap2}" y="${expY}" width="${barW_2}" height="${expH}" rx="2" fill="#f87171" opacity="0.85"/>`;
-    svg2 += `<text x="${xBase + barW_2 + barGap2/2}" y="${svgH2 - pad2.bottom + 16}" text-anchor="middle" fill="var(--text2)" font-size="9">${barData[i].label}</text>`;
-  });
-  svg2 += '<rect x="'+(svgW2-130)+'" y="5" width="10" height="10" rx="2" fill="#4ade80" opacity="0.85"/><text x="'+(svgW2-116)+'" y="13" fill="var(--text2)" font-size="10">Ingresos</text>';
-  svg2 += '<rect x="'+(svgW2-130)+'" y="20" width="10" height="10" rx="2" fill="#f87171" opacity="0.85"/><text x="'+(svgW2-116)+'" y="28" fill="var(--text2)" font-size="10">Gastos</text>';
-  svg2 += '</svg>';
-  container.innerHTML = svg2;
+  // Render annual chart
+  const barContainer2 = document.getElementById('annualBarChart');
+  const bw2 = Math.min(900, barContainer2.parentElement.clientWidth - 32);
+  const barMonths2 = []; for (let m=1;m<=12;m++) barMonths2.push(year+'-'+String(m).padStart(2,'0'));
+  let svgW2=bw2,svgH2=240,pad2={top:10,bottom:40,left:55,right:10},cw2=svgW2-pad2.left-pad2.right,ch2=svgH2-pad2.top-pad2.bottom;
+  let allV2=[]; barMonths2.forEach(k=>{allV2.push(getIncomeTotal(k));allV2.push(getExpenseTotal(k));}); let maxV2=Math.max(...allV2)*1.2||1;
+  let barGap2=Math.max(4,cw2/12*0.3),barW_2=(cw2-barGap2*11)/12/2;
+  let svg2='<svg width="'+svgW2+'" height="'+svgH2+'" viewBox="0 0 '+svgW2+' '+svgH2+'" style="max-width:100%">';
+  svg2+='<line x1="'+pad2.left+'" y1="'+pad2.top+'" x2="'+pad2.left+'" y2="'+(svgH2-pad2.bottom)+'" stroke="var(--border)"/>';
+  svg2+='<line x1="'+pad2.left+'" y1="'+(svgH2-pad2.bottom)+'" x2="'+(svgW2-pad2.right)+'" y2="'+(svgH2-pad2.bottom)+'" stroke="var(--border)"/>';
+  for(let i=0;i<=4;i++){let y=pad2.top+(ch2/4)*i,val=Math.round(maxV2-(maxV2/4)*i);svg2+='<line x1="'+pad2.left+'" y1="'+y+'" x2="'+(svgW2-pad2.right)+'" y2="'+y+'" stroke="var(--border)" stroke-dasharray="3,3"/>';svg2+='<text x="'+(pad2.left-6)+'" y="'+(y+4)+'" text-anchor="end" fill="var(--text2)" font-size="10">'+(val>1000?Math.round(val/1000)+'k':val)+'</text>';}
+  barMonths2.forEach((k,i)=>{let xBase=pad2.left+i*(cw2/12)+(cw2/12-barW_2*2-barGap2)/2;let incH=(getIncomeTotal(k)/maxV2)*ch2,expH=(getExpenseTotal(k)/maxV2)*ch2;svg2+='<rect x="'+xBase+'" y="'+(svgH2-pad2.bottom-incH)+'" width="'+barW_2+'" height="'+incH+'" rx="2" fill="#4ade80" opacity="0.85"/>';svg2+='<rect x="'+(xBase+barW_2+barGap2)+'" y="'+(svgH2-pad2.bottom-expH)+'" width="'+barW_2+'" height="'+expH+'" rx="2" fill="#f87171" opacity="0.85"/>';svg2+='<text x="'+(xBase+barW_2+barGap2/2)+'" y="'+(svgH2-pad2.bottom+16)+'" text-anchor="middle" fill="var(--text2)" font-size="9">'+MONTHS[parseInt(k.split('-')[1])-1].substr(0,3)+'</text>';});
+  svg2+='<rect x="'+(svgW2-130)+'" y="5" width="10" height="10" rx="2" fill="#4ade80" opacity="0.85"/><text x="'+(svgW2-116)+'" y="13" fill="var(--text2)" font-size="10">Ingresos</text>';
+  svg2+='<rect x="'+(svgW2-130)+'" y="20" width="10" height="10" rx="2" fill="#f87171" opacity="0.85"/><text x="'+(svgW2-116)+'" y="28" fill="var(--text2)" font-size="10">Gastos</text>';
+  svg2+='</svg>'; barContainer2.innerHTML = svg2;
 }
-
-function getYearTotal(year, type) {
-  return state.transactions.filter(t => t.type === type && t.date.startsWith(year)).reduce((s,t) => s + t.amount, 0);
-}
+function getYearTotal(year, type) { return state.transactions.filter(t => t.type===type&&t.date.startsWith(year)).reduce((s,t)=>s+t.amount,0); }
 
 // ---------- Movimientos ----------
 function renderMovimientos() {
   const month = state.currentMonth;
-  let tx = getTxByMonth(month);
-  tx.sort((a,b) => new Date(b.date) - new Date(a.date));
-  let html = `<div class="card"><h2>Movimientos - ${monthName(month)}</h2>
-    <div class="filter-pills">
-      <span class="filter-pill active" onclick="filterTxs('Todas')">Todas</span>`;
-  state.accounts.forEach((a,i) => {
-    html += `<span class="filter-pill" onclick="filterTxs('${a}')"><span class="account-dot ${getAccountColor(i)}" style="display:inline-block;vertical-align:middle"></span> ${a}</span>`;
-  });
-  html += `</div>
-    <button class="btn btn-sm btn-outline" onclick="deleteAllMonth()" style="margin-bottom:8px">Borrar todos de este mes</button>
-    <div id="movTableContainer">`;
-  window._movTx = tx;
-  window._movFilter = 'Todas';
-  html += renderMovTable(tx);
-  html += '</div></div>';
+  let tx = getTxByMonth(month); tx.sort((a,b) => new Date(b.date)-new Date(a.date));
+  let html = '<div class="card"><h2>Movimientos - '+monthName(month)+'</h2><div class="filter-pills"><span class="filter-pill active" onclick="filterTxs(\'Todas\')">Todas</span>';
+  state.accounts.forEach((a,i) => { html += '<span class="filter-pill" onclick="filterTxs(\''+a+'\')"><span class="account-dot '+getAccountColor(i)+'" style="display:inline-block;vertical-align:middle"></span> '+a+'</span>'; });
+  html += '</div><button class="btn btn-sm btn-outline" onclick="deleteAllMonth()" style="margin-bottom:8px">Borrar todos</button><div id="movTableContainer">';
+  window._movTx = tx; window._movFilter = 'Todas';
+  html += renderMovTable(tx) + '</div></div>';
   document.getElementById('main').innerHTML = html;
 }
-
 function renderMovTable(txList) {
-  if (txList.length === 0) return '<div class="empty-state"><div class="icon">📭</div><p>Sin movimientos este mes</p></div>';
+  if (txList.length === 0) return '<div class="empty-state"><div class="icon">&#128236;</div><p>Sin movimientos</p></div>';
   let h = '<table><thead><tr><th>Fecha</th><th>Tipo</th><th>Cuenta</th><th>Categoria</th><th>Subcategoria</th><th>Descripcion</th><th>Monto</th><th></th></tr></thead><tbody>';
   txList.forEach(t => {
-    const acctIdx = state.accounts.indexOf(t.account || state.accounts[0]);
-    const acctCls = getAccountColor(Math.max(0, acctIdx));
-    h += `<tr>
-      <td>${t.date}</td>
-      <td><span class="tag ${t.type === 'income' ? 'tag-income' : 'tag-expense'}">${t.type === 'income' ? 'Ingreso' : 'Gasto'}</span></td>
-      <td><span class="account-dot ${acctCls}" style="vertical-align:middle"></span> ${t.account || state.accounts[0]}</td>
-      <td>${t.category}</td><td>${t.subcategory}</td><td>${t.description || '-'}</td>
-      <td class="right ${t.type === 'income' ? 'green' : 'red'}">${fmt(t.amount)}</td>
-      <td><button class="btn btn-sm btn-danger" onclick="deleteTx('${t.id}')">x</button></td>
-    </tr>`;
+    const idx = state.accounts.indexOf(t.account || state.accounts[0]), cls = getAccountColor(Math.max(0,idx));
+    h += '<tr><td>'+t.date+'</td><td><span class="tag '+(t.type==='income'?'tag-income':'tag-expense')+'">'+(t.type==='income'?'Ingreso':'Gasto')+'</span></td><td><span class="account-dot '+cls+'" style="vertical-align:middle"></span> '+(t.account||state.accounts[0])+'</td><td>'+t.category+'</td><td>'+t.subcategory+'</td><td>'+(t.description||'-')+'</td><td class="right '+(t.type==='income'?'green':'red')+'">'+fmt(t.amount)+'</td><td><button class="btn btn-sm btn-danger" onclick="deleteTx(\''+t.id+'\')">x</button></td></tr>';
   });
-  h += '</tbody></table>';
-  return h;
+  return h + '</tbody></table>';
 }
-
 function filterTxs(account) {
   window._movFilter = account;
-  const tx = window._movTx;
-  const filtered = account === 'Todas' ? tx : tx.filter(t => (t.account || state.accounts[0]) === account);
-  document.querySelectorAll('.filter-pill').forEach(p => {
-    p.classList.remove('active');
-    if (p.textContent.trim() === account) p.classList.add('active');
-  });
-  // Handle the "dot + name" pill case
-  document.querySelectorAll('.filter-pill').forEach(p => {
-    const txt = p.textContent.replace(/^\s*●\s*/,'').trim();
-    if (txt === account) p.classList.add('active');
-  });
+  const filtered = account==='Todas' ? window._movTx : window._movTx.filter(t => (t.account||state.accounts[0])===account);
+  document.querySelectorAll('.filter-pill').forEach(p => { p.classList.remove('active'); if (p.textContent.replace(/^\s*\u25CF\s*/,'').trim()===account) p.classList.add('active'); });
   document.getElementById('movTableContainer').innerHTML = renderMovTable(filtered);
 }
-
-function deleteTx(id) {
-  state.transactions = state.transactions.filter(t => t.id !== id);
-  saveAll();
-  renderMovimientos();
-  toast('Movimiento eliminado', 'success');
-}
-function deleteAllMonth() {
-  if (!confirm('Borrar TODOS los movimientos de este mes?')) return;
-  const month = state.currentMonth;
-  state.transactions = state.transactions.filter(t => !t.date.startsWith(month));
-  saveAll();
-  renderMovimientos();
-  toast('Movimientos del mes borrados', 'success');
-}
+function deleteTx(id) { state.transactions = state.transactions.filter(t => t.id!==id); saveAll(); renderMovimientos(); toast('Eliminado', 'success'); }
+function deleteAllMonth() { if(!confirm('Borrar TODOS los movimientos de este mes?'))return; state.transactions=state.transactions.filter(t=>!t.date.startsWith(state.currentMonth));saveAll();renderMovimientos();toast('Borrados','success'); }
 
 // ---------- Configuracion ----------
 function renderConfiguracion() {
-  let html = `<div class="card"><h2>Categorias</h2><p style="color:var(--text2);margin-bottom:12px;font-size:.85rem">Puedes agregar, editar o eliminar categorias y subcategorias en cualquier momento.</p>
-    <div class="form-row" style="margin-bottom:14px">
-      <div class="form-group"><label>Nueva Categoria</label><input type="text" id="newCatName" placeholder="Nombre de la categoria"></div>
-      <div class="form-group"><label>Tipo</label><select id="newCatType"><option value="expense">Gasto</option><option value="income">Ingreso</option></select></div>
-    </div>
-    <button class="btn btn-primary btn-sm" onclick="addCategory()" style="margin-bottom:20px">+ Crear Categoria</button>`;
+  let html = '<div class="card"><h2>Categorias</h2><p style="color:var(--text2);margin-bottom:12px;font-size:.85rem">Agrega, edita o elimina categorias y subcategorias</p><div class="form-row" style="margin-bottom:14px"><div class="form-group"><label>Nueva Categoria</label><input type="text" id="newCatName" placeholder="Nombre"></div><div class="form-group"><label>Tipo</label><select id="newCatType"><option value="expense">Gasto</option><option value="income">Ingreso</option></select></div></div><button class="btn btn-primary btn-sm" onclick="addCategory()" style="margin-bottom:20px">+ Crear Categoria</button>';
   state.categories.forEach(cat => {
-    html += `<div class="category-block" style="border-left:3px solid ${cat.type==='income'?'var(--green)':'var(--red)'}">
-      <div class="cat-header">
-        <span class="cat-name">${cat.name} <span class="tag ${cat.type==='income'?'tag-income':'tag-expense'}">${cat.type==='income'?'Ingreso':'Gasto'}</span></span>
-        <button class="btn btn-sm btn-danger" onclick="deleteCategory('${cat.name}')">Eliminar</button>
-      </div>
-      <div class="sub-tags">`;
-    cat.subcategories.forEach(sub => {
-      html += `<span class="sub-tag">${sub}<span class="remove" onclick="deleteSubcategory('${cat.name}','${sub}')">×</span></span>`;
-    });
-    html += `</div>
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <input type="text" id="newSub_${cat.name.replace(/[^a-zA-Z0-9]/g,'_')}" placeholder="Nueva subcategoria" class="inline-input" style="flex:1">
-        <button class="btn btn-sm btn-outline" onclick="addSubcategory('${cat.name}')">+ Agregar</button>
-      </div>
-    </div>`;
+    html += '<div class="category-block" style="border-left:3px solid '+(cat.type==='income'?'var(--green)':'var(--red)')+'"><div class="cat-header"><span class="cat-name">'+cat.name+' <span class="tag '+(cat.type==='income'?'tag-income':'tag-expense')+'">'+(cat.type==='income'?'Ingreso':'Gasto')+'</span></span><button class="btn btn-sm btn-danger" onclick="deleteCategory(\''+cat.name+'\')">Eliminar</button></div><div class="sub-tags">';
+    cat.subcategories.forEach(sub => { html += '<span class="sub-tag">'+sub+'<span class="remove" onclick="deleteSubcategory(\''+cat.name+'\',\''+sub+'\')">&times;</span></span>'; });
+    html += '</div><div style="display:flex;gap:8px;margin-top:8px"><input type="text" id="newSub_'+cat.name.replace(/[^a-zA-Z0-9]/g,'_')+'" placeholder="Nueva subcategoria" class="inline-input" style="flex:1"><button class="btn btn-sm btn-outline" onclick="addSubcategory(\''+cat.name+'\')">+ Agregar</button></div></div>';
   });
   html += '</div>';
-  // Seccion de Cuentas
-  html += `<div class="card" style="margin-top:16px"><h2>Cuentas</h2><p style="color:var(--text2);margin-bottom:12px;font-size:.85rem">Gestiona tus cuentas bancarias y billeteras digitales</p>
-    <div style="display:flex;gap:8px;margin-bottom:14px"><input type="text" id="newAcctName" placeholder="Nombre de la cuenta" class="inline-input" style="flex:1"><button class="btn btn-primary btn-sm" onclick="addAccount()">+ Agregar Cuenta</button></div>`;
-  state.accounts.forEach((a, i) => {
-    const cls = getAccountColor(i);
-    html += `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid var(--border);border-radius:6px;margin-bottom:6px;background:var(--surface2)">
-      <span class="account-info"><span class="account-dot ${cls}"></span><strong>${a}</strong></span>
-      <div style="display:flex;gap:8px;align-items:center">
-        <input type="text" id="renameAcct_${i}" placeholder="Renombrar" class="inline-input" style="width:130px">
-        <button class="btn btn-sm btn-outline" onclick="renameAccount(${i})">Renombrar</button>
-        <button class="btn btn-sm btn-danger" onclick="deleteAccount(${i})">x</button>
-      </div>
-    </div>`;
-  });
+  // Cuentas
+  html += '<div class="card" style="margin-top:16px"><h2>Cuentas</h2><p style="color:var(--text2);margin-bottom:12px;font-size:.85rem">Gestiona tus cuentas bancarias</p><div style="display:flex;gap:8px;margin-bottom:14px"><input type="text" id="newAcctName" placeholder="Nombre" class="inline-input" style="flex:1"><button class="btn btn-primary btn-sm" onclick="addAccount()">+ Agregar</button></div>';
+  state.accounts.forEach((a,i) => { html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid var(--border);border-radius:6px;margin-bottom:6px;background:var(--surface2)"><span class="account-info"><span class="account-dot '+getAccountColor(i)+'"></span><strong>'+a+'</strong></span><div style="display:flex;gap:8px;align-items:center"><input type="text" id="renameAcct_'+i+'" placeholder="Renombrar" class="inline-input" style="width:130px"><button class="btn btn-sm btn-outline" onclick="renameAccount('+i+')">Renombrar</button><button class="btn btn-sm btn-danger" onclick="deleteAccount('+i+')">x</button></div></div>'; });
   html += '</div>';
   document.getElementById('main').innerHTML = html;
 }
-
+function addCategory() {
+  const name = document.getElementById('newCatName').value.trim(), type = document.getElementById('newCatType').value;
+  if (!name) return toast('Escribe un nombre', 'error');
+  if (state.categories.find(c => c.name===name)) return toast('Ya existe', 'error');
+  state.categories.push({name,type,subcategories:[]}); saveAll(); renderConfiguracion(); toast('Creada: '+name, 'success');
+}
+function deleteCategory(name) {
+  if (!confirm('Eliminar "'+name+'"?')) return;
+  state.categories = state.categories.filter(c => c.name!==name); saveAll(); renderConfiguracion(); toast('Eliminada', 'success');
+}
+function addSubcategory(catName) {
+  const el = document.getElementById('newSub_'+catName.replace(/[^a-zA-Z0-9]/g,'_'));
+  const val = (el.value||'').trim(); if (!val) return toast('Escribe un nombre', 'error');
+  const cat = state.categories.find(c => c.name===catName); if (!cat) return;
+  if (cat.subcategories.includes(val)) return toast('Ya existe', 'error');
+  cat.subcategories.push(val); saveAll(); el.value = ''; renderConfiguracion(); toast('Agregada', 'success');
+}
+function deleteSubcategory(catName, sub) {
+  const cat = state.categories.find(c => c.name===catName); if (!cat) return;
+  cat.subcategories = cat.subcategories.filter(s => s!==sub); saveAll(); renderConfiguracion(); toast('Eliminada', 'success');
+}
 function addAccount() {
   const name = document.getElementById('newAcctName').value.trim();
   if (!name) return toast('Escribe un nombre', 'error');
-  if (state.accounts.includes(name)) return toast('Ya existe esa cuenta', 'error');
-  state.accounts.push(name);
-  saveAll();
-  renderConfiguracion();
-  toast('Cuenta agregada: ' + name, 'success');
+  if (state.accounts.includes(name)) return toast('Ya existe', 'error');
+  state.accounts.push(name); saveAll(); renderConfiguracion(); toast('Cuenta: '+name, 'success');
 }
 function renameAccount(i) {
-  const el = document.getElementById('renameAcct_' + i);
-  const name = el.value.trim();
+  const el = document.getElementById('renameAcct_'+i), name = (el.value||'').trim();
   if (!name) return toast('Escribe un nombre', 'error');
-  if (state.accounts.some((a, j) => j !== i && a === name)) return toast('Ya existe una cuenta con ese nombre', 'error');
-  const oldName = state.accounts[i];
-  state.accounts[i] = name;
-  state.transactions.forEach(t => { if (t.account === oldName) t.account = name; });
-  saveAll();
-  renderConfiguracion();
-  toast('Cuenta renombrada', 'success');
+  if (state.accounts.some((a,j) => j!==i && a===name)) return toast('Nombre duplicado', 'error');
+  const old = state.accounts[i]; state.accounts[i] = name;
+  state.transactions.forEach(t => { if(t.account===old) t.account = name; });
+  saveAll(); renderConfiguracion(); toast('Renombrada', 'success');
 }
 function deleteAccount(i) {
-  if (!confirm('Eliminar la cuenta "' + state.accounts[i] + '"?')) return;
-  const name = state.accounts[i];
-  state.accounts.splice(i, 1);
-  state.transactions.forEach(t => { if (t.account === name) t.account = state.accounts[0] || 'General'; });
-  saveAll();
-  renderConfiguracion();
-  toast('Cuenta eliminada', 'success');
-}
-
-function addCategory() {
-  const name = document.getElementById('newCatName').value.trim();
-  const type = document.getElementById('newCatType').value;
-  if (!name) return toast('Escribe un nombre', 'error');
-  if (state.categories.find(c => c.name === name)) return toast('Ya existe esa categoria', 'error');
-  state.categories.push({ name, type, subcategories: [] });
-  saveAll();
-  renderConfiguracion();
-  toast('Categoria creada: ' + name, 'success');
-}
-function deleteCategory(name) {
-  if (!confirm('Eliminar la categoria "' + name + '" y todas sus subcategorias? Los movimientos existentes se mantendran.')) return;
-  state.categories = state.categories.filter(c => c.name !== name);
-  saveAll();
-  renderConfiguracion();
-  toast('Categoria eliminada', 'success');
-}
-function addSubcategory(catName) {
-  const elId = 'newSub_' + catName.replace(/[^a-zA-Z0-9]/g,'_');
-  const el = document.getElementById(elId);
-  const val = el.value.trim();
-  if (!val) return toast('Escribe un nombre', 'error');
-  const cat = state.categories.find(c => c.name === catName);
-  if (!cat) return;
-  if (cat.subcategories.includes(val)) return toast('Ya existe esa subcategoria', 'error');
-  cat.subcategories.push(val);
-  saveAll();
-  el.value = '';
-  renderConfiguracion();
-  toast('Subcategoria agregada', 'success');
-}
-function deleteSubcategory(catName, sub) {
-  const cat = state.categories.find(c => c.name === catName);
-  if (!cat) return;
-  cat.subcategories = cat.subcategories.filter(s => s !== sub);
-  saveAll();
-  renderConfiguracion();
-  toast('Subcategoria eliminada', 'success');
+  if (!confirm('Eliminar "'+state.accounts[i]+'"?')) return;
+  const name = state.accounts[i]; state.accounts.splice(i, 1);
+  state.transactions.forEach(t => { if(t.account===name) t.account = state.accounts[0]||'General'; });
+  saveAll(); renderConfiguracion(); toast('Eliminada', 'success');
 }
 
 // ---------- Datos ----------
 function renderDatos() {
-  let html = `<div class="card"><h2>Gestion de Datos</h2>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
-      <button class="btn btn-primary" onclick="exportCSV()">Exportar a CSV</button>
-      <button class="btn btn-outline" onclick="exportJSON()">Exportar a JSON</button>
-    </div>
-    <div class="form-group"><label>Importar desde CSV</label><input type="file" id="csvFile" accept=".csv" onchange="importCSV(this)"></div>
-    <div class="form-group"><label>Importar desde JSON</label><input type="file" id="jsonFile" accept=".json" onchange="importJSON(this)"></div>
-    <button class="btn btn-danger" onclick="resetAll()" style="margin-top:12px">Reiniciar Todos los Datos</button>
-  </div>
-  <div class="card">
-    <h3>Estadisticas</h3>
-    <p style="font-size:.85rem;color:var(--text2)">Total transacciones: <strong>${state.transactions.length}</strong></p>
-    <p style="font-size:.85rem;color:var(--text2)">Categorias: <strong>${state.categories.length}</strong></p>
-    <p style="font-size:.85rem;color:var(--text2)">Meses con presupuesto: <strong>${Object.keys(state.budgets).length}</strong></p>
-    <p style="font-size:.85rem;color:var(--text2);margin-top:10px">Sincronizacion: <strong style="color:${fbUid ? 'var(--green)' : 'var(--amber)'}">${fbUid ? 'Conectado a la nube' : 'Modo local (sin conexion)'}</strong></p>
-  </div>`;
-  document.getElementById('main').innerHTML = html;
+  document.getElementById('main').innerHTML = '<div class="card"><h2>Gestion de Datos</h2><div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px"><button class="btn btn-primary" onclick="exportCSV()">Exportar CSV</button><button class="btn btn-outline" onclick="exportJSON()">Exportar JSON</button></div><div class="form-group"><label>Importar desde CSV</label><input type="file" id="csvFile" accept=".csv" onchange="importCSV(this)"></div><div class="form-group"><label>Importar desde JSON</label><input type="file" id="jsonFile" accept=".json" onchange="importJSONFile(this)"></div><button class="btn btn-danger" onclick="resetAll()" style="margin-top:12px">Reiniciar Todo</button></div><div class="card"><h3>Estadisticas</h3><p style="font-size:.85rem;color:var(--text2)">Transacciones: <strong>'+state.transactions.length+'</strong></p><p style="font-size:.85rem;color:var(--text2)">Categorias: <strong>'+state.categories.length+'</strong></p><p style="font-size:.85rem;color:var(--text2)">Meses con presupuesto: <strong>'+Object.keys(state.budgets).length+'</strong></p></div>';
 }
-
 function exportCSV() {
   let csv = 'id,tipo,cuenta,categoria,subcategoria,monto,fecha,descripcion\n';
-  state.transactions.forEach(t => {
-    csv += [t.id, t.type, t.account || state.accounts[0], t.category, t.subcategory, t.amount, t.date, t.description || ''].join(',') + '\n';
-  });
+  state.transactions.forEach(t => { csv += [t.id,t.type,t.account||state.accounts[0],t.category,t.subcategory,t.amount,t.date,t.description||''].join(',')+'\n'; });
   downloadFile('finanzas2026_movimientos.csv', csv);
 }
-function exportJSON() {
-  const data = { accounts: state.accounts, categories: state.categories, transactions: state.transactions, budgets: state.budgets };
-  downloadFile('finanzas2026_completo.json', JSON.stringify(data, null, 2));
-}
-function downloadFile(name, content) {
-  const blob = new Blob([content], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = name; a.click();
-  URL.revokeObjectURL(url);
-  toast('Archivo descargado: ' + name, 'success');
-}
+function exportJSON() { downloadFile('finanzas2026_completo.json', JSON.stringify({accounts:state.accounts,categories:state.categories,transactions:state.transactions,budgets:state.budgets},null,2)); }
+function downloadFile(name, content) { const b=new Blob([content],{type:'text/plain'}); const u=URL.createObjectURL(b); const a=document.createElement('a');a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);toast('Descargado: '+name,'success'); }
 function importCSV(input) {
-  const file = input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onerror = function() { toast('Error al leer el archivo', 'error'); };
-  reader.onload = function(e) {
-    const text = e.target.result;
-    if (!text || !text.trim()) return toast('Archivo vacio', 'error');
-    const lines = text.split('\n').filter(l => l.trim());
-    if (lines.length < 2) return toast('Archivo sin datos validos', 'error');
-    let count = 0;
-    for (let i = 1; i < lines.length; i++) {
-      const cols = lines[i].split(',');
-      if (cols.length < 7) continue;
-      const tx = { id: cols[0] || uid(), type: cols[1], account: cols[2] || state.accounts[0], category: cols[3], subcategory: cols[4], amount: parseInt(cols[5]) || 0, date: cols[6], description: cols[7] || '' };
-      if (tx.type && tx.category && tx.date) { state.transactions.push(tx); count++; }
-    }
-    saveAll();
-    toast(`Importados ${count} movimientos del CSV`, 'success');
-    renderCurrentTab();
-  };
-  reader.readAsText(file);
+  const f=input.files[0]; if(!f)return; const r=new FileReader();
+  r.onerror=()=>toast('Error al leer archivo','error');
+  r.onload=function(e){
+    const lines=e.target.result.split('\n').filter(l=>l.trim()); if(lines.length<2)return toast('Vacio','error');
+    let c=0; for(let i=1;i<lines.length;i++){const cols=lines[i].split(',');if(cols.length<7)continue;const tx={id:cols[0]||uid(),type:cols[1],account:cols[2]||state.accounts[0],category:cols[3],subcategory:cols[4],amount:parseInt(cols[5])||0,date:cols[6],description:cols[7]||''};if(tx.type&&tx.category&&tx.date){state.transactions.push(tx);c++;}}
+    saveAll(); toast('Importados '+c+' movimientos','success'); renderCurrentTab();
+  }; r.readAsText(f);
 }
 function importJSONFile(input) {
-  const file = input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onerror = function() { toast('Error al leer el archivo JSON', 'error'); };
-  reader.onload = function(e) {
-    try {
-      const text = e.target.result;
-      if (!text || !text.trim()) return toast('Archivo JSON vacio', 'error');
-      const data = JSON.parse(text);
-      let nTx = 0, nBud = 0, nCat = 0, nAcct = 0;
-      if (data.accounts && Array.isArray(data.accounts)) { state.accounts = data.accounts; LS.set('accounts', state.accounts); nAcct = state.accounts.length; }
-      if (data.categories && Array.isArray(data.categories)) { state.categories = data.categories; LS.set('categories', state.categories); nCat = data.categories.length; }
-      if (data.transactions && Array.isArray(data.transactions)) { state.transactions = state.transactions.concat(data.transactions); nTx = data.transactions.length; }
-      if (data.budgets && typeof data.budgets === 'object') { Object.assign(state.budgets, data.budgets); nBud = Object.keys(data.budgets).length; }
-      state.transactions.forEach(t => { if (!t.account) t.account = state.accounts[0] || 'General'; });
-      saveAll();
-      toast(`Importado! ${nTx} movimientos, ${nBud} meses${nAcct > 0 ? ', ' + nAcct + ' cuentas' : ''}`, 'success');
-      renderCurrentTab();
-    } catch(err) { toast('Error: archivo JSON no valido: ' + err.message, 'error'); console.error(err); }
-  };
-  reader.readAsText(file);
+  const f=input.files[0]; if(!f)return; const r=new FileReader();
+  r.onerror=()=>toast('Error al leer archivo','error');
+  r.onload=function(e){
+    try{const d=JSON.parse(e.target.result);let nTx=0,nBud=0,nAcct=0;
+    if(d.accounts&&Array.isArray(d.accounts)){state.accounts=d.accounts;nAcct=d.accounts.length;}
+    if(d.categories&&Array.isArray(d.categories)){state.categories=d.categories;}
+    if(d.transactions&&Array.isArray(d.transactions)){state.transactions=state.transactions.concat(d.transactions);nTx=d.transactions.length;}
+    if(d.budgets&&typeof d.budgets==='object'){Object.assign(state.budgets,d.budgets);nBud=Object.keys(d.budgets).length;}
+    state.transactions.forEach(t=>{if(!t.account)t.account=state.accounts[0]||'General';});
+    saveAll(); toast('Importado! '+nTx+' mov, '+nBud+' meses'+(nAcct>0?', '+nAcct+' cuentas':''),'success'); renderCurrentTab();
+    }catch(err){toast('JSON no valido: '+err.message,'error');}
+  }; r.readAsText(f);
 }
 function resetAll() {
-  if (!confirm('Esto borrara TODOS tus datos para SIEMPRE. Seguir?')) return;
-  if (!confirm('ULTIMA CONFIRMACION: Perderas categorias, movimientos y presupuestos. OK?')) return;
-  state.categories = JSON.parse(JSON.stringify(DEFAULT_CATEGORIES));
-  state.transactions = [];
-  state.budgets = {};
-  state.accounts = ['Banco Santander', 'Banco de Chile', 'Mercado Pago'];
-  saveAll();
-  renderDatos();
-  toast('Todo reiniciado', 'success');
+  if(!confirm('Borrar TODO? Primer aviso'))return;
+  if(!confirm('SEGURO? No se puede deshacer'))return;
+  state.categories=JSON.parse(JSON.stringify(DEFAULT_CATEGORIES));state.transactions=[];state.budgets={};state.accounts=['Banco Santander','Banco de Chile','Mercado Pago'];
+  saveAll(); renderDatos(); toast('Reiniciado','success');
 }
 
-// ---------- Navigation ----------
+// ---------- Nav ----------
 function switchTab(tab) {
   state.currentTab = tab;
   document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
-  const btn = document.querySelector(`[data-tab="${tab}"]`);
-  if (btn) btn.classList.add('active');
+  const btn = document.querySelector('[data-tab="'+tab+'"]'); if (btn) btn.classList.add('active');
   renderCurrentTab();
 }
 function renderCurrentTab() {
@@ -1151,63 +558,29 @@ function renderCurrentTab() {
     case 'movimientos': renderMovimientos(); break;
     case 'configuracion': renderConfiguracion(); break;
     case 'datos': renderDatos(); break;
-    default: renderRegistrar();
+    default: renderDashboard();
   }
 }
-function changeMonth(dir) {
-  const sel = document.getElementById('monthSelect');
-  const idx = sel.selectedIndex + dir;
-  if (idx >= 0 && idx < sel.options.length) {
-    sel.selectedIndex = idx;
-    onMonthChange();
-  }
-}
-function onMonthChange() {
-  state.currentMonth = document.getElementById('monthSelect').value;
-  LS.set('currentMonth', state.currentMonth);
-  renderCurrentTab();
-}
+function changeMonth(dir) { const sel=document.getElementById('monthSelect'); const idx=sel.selectedIndex+dir; if(idx>=0&&idx<sel.options.length){sel.selectedIndex=idx;onMonthChange();} }
+function onMonthChange() { state.currentMonth=document.getElementById('monthSelect').value; LS.set('currentMonth',state.currentMonth); renderCurrentTab(); }
 
 // ---------- Init ----------
-document.getElementById('tabs').addEventListener('click', function(e) {
-  if (e.target.tagName === 'BUTTON' && e.target.dataset.tab) {
-    switchTab(e.target.dataset.tab);
-  }
-});
+document.getElementById('tabs').addEventListener('click', function(e) { if(e.target.tagName==='BUTTON'&&e.target.dataset.tab) switchTab(e.target.dataset.tab); });
+window.deleteTx=deleteTx; window.addTransaction=addTransaction; window.onTxTypeChange=onTxTypeChange; window.onTxCatChange=onTxCatChange;
+window.selectAccount=selectAccount; window.renderAccountPills=renderAccountPills;
+window.copyPreviousBudget=copyPreviousBudget; window.saveAllBudgets=saveAllBudgets; window.saveBudget=saveBudget;
+window.deleteAllMonth=deleteAllMonth; window.filterTxs=filterTxs;
+window.deleteCategory=deleteCategory; window.deleteSubcategory=deleteSubcategory; window.addCategory=addCategory; window.addSubcategory=addSubcategory;
+window.addAccount=addAccount; window.renameAccount=renameAccount; window.deleteAccount=deleteAccount;
+window.exportCSV=exportCSV; window.exportJSON=exportJSON; window.importCSV=importCSV; window.importJSONFile=importJSONFile;
+window.resetAll=resetAll; window.changeMonth=changeMonth; window.onMonthChange=onMonthChange;
 
-window.deleteTx = deleteTx;
-window.addTransaction = addTransaction;
-window.onTxTypeChange = onTxTypeChange;
-window.onTxCatChange = onTxCatChange;
-window.copyPreviousBudget = copyPreviousBudget;
-window.saveAllBudgets = saveAllBudgets;
-window.deleteAllMonth = deleteAllMonth;
-window.deleteCategory = deleteCategory;
-window.deleteSubcategory = deleteSubcategory;
-window.addCategory = addCategory;
-window.addSubcategory = addSubcategory;
-window.addAccount = addAccount;
-window.renameAccount = renameAccount;
-window.deleteAccount = deleteAccount;
-window.filterTxs = filterTxs;
-window.renderAccountPills = renderAccountPills;
-window.selectAccount = selectAccount;
-window.exportCSV = exportCSV;
-window.exportJSON = exportJSON;
-window.importCSV = importCSV;
-window.importJSON = importJSONFile;
-window.doLogout = doLogout;
-window.doLogin = doLogin;
-window.doRegister = doRegister;
-window.resetAll = resetAll;
-window.changeMonth = changeMonth;
-window.onMonthChange = onMonthChange;
-
-const sel = document.getElementById('monthSelect');
-sel.value = state.currentMonth;
-
-// Fix: expose saveBudget for planificacion inline onchange
-window.saveBudget = saveBudget;
+const savedMonth = LS.get('currentMonth', null);
+if (savedMonth) state.currentMonth = savedMonth;
+document.getElementById('monthSelect').value = state.currentMonth;
+// Migrate old transactions
+let migrated=0; state.transactions.forEach(t=>{if(!t.account){t.account=state.accounts[0];migrated++;}}); if(migrated>0)saveAll();
+switchTab('dashboard');
 </script>
 </body>
 </html>
