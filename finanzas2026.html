@@ -214,6 +214,20 @@ const FIREBASE_CONFIG = {
 
 let fb = null, fbDb = null, fbAuth = null, fbUid = null;
 let fbReady = false;
+let fbSyncTimeout = null;
+
+function showAuthOverlay(show, msg) {
+  const overlay = document.getElementById('authOverlay');
+  const form = document.getElementById('authForm');
+  const loading = document.getElementById('authLoading');
+  if (show) {
+    overlay.style.display = 'flex';
+    if (msg) { form.style.display = 'none'; loading.style.display = 'block'; loading.innerHTML = msg; }
+    else { form.style.display = 'block'; loading.style.display = 'none'; }
+  } else {
+    overlay.style.display = 'none';
+  }
+}
 
 function initFirebase() {
   if (typeof firebase === 'undefined') { fbReady = false; return; }
@@ -224,18 +238,21 @@ function initFirebase() {
     fb = firebase;
     fbDb.enablePersistence({ synchronizeTabs: true }).catch(() => {});
     fbAuth.onAuthStateChanged(user => {
+      if (fbSyncTimeout) clearTimeout(fbSyncTimeout);
       if (user) {
         fbUid = user.uid;
-        document.getElementById('authOverlay').style.display = 'none';
-        pullFromFirestore().then(() => {
+        showAuthOverlay(true, '<p>Conectando...</p>');
+        pullFromFirestore().then(success => {
+          if (success) {
+            showAuthOverlay(true, '<p>Cargando tus datos...</p>');
+          }
+          fbReady = true;
           if (!window._appStarted) { window._appStarted = true; startApp(); }
           else renderCurrentTab();
-          fbReady = true;
+          showAuthOverlay(false);
         });
       } else {
-        document.getElementById('authOverlay').style.display = 'flex';
-        document.getElementById('authLoading').style.display = 'none';
-        document.getElementById('authForm').style.display = 'block';
+        showAuthOverlay(true);
         fbUid = null; fbReady = false;
       }
     });
@@ -243,22 +260,50 @@ function initFirebase() {
 }
 
 async function pullFromFirestore() {
-  if (!fbUid || !fbDb) return;
+  if (!fbUid || !fbDb) return false;
   try {
-    const doc = await fbDb.collection('users').doc(fbUid).collection('data').doc('state').get();
+    const docRef = fbDb.collection('users').doc(fbUid).collection('data').doc('state');
+    const doc = await Promise.race([docRef.get(), timeout(8000)]);
+    if (!doc || !doc.exists) {
+      // New user: push default state
+      await pushInitialState();
+      return true;
+    }
     if (doc.exists && doc.data().updatedAt) {
       const d = doc.data();
-      const localTS = LS.get('syncedAt', 0);
+      const localTS = LS_orig.get('syncedAt', 0);
       const cloudTS = d.updatedAt ? d.updatedAt.toMillis() : 0;
       if (cloudTS > localTS) {
         if (d.categories) state.categories = d.categories;
         if (d.accounts) state.accounts = d.accounts;
         if (d.transactions) state.transactions = d.transactions;
         if (d.budgets) state.budgets = d.budgets;
-        LS.set('syncedAt', cloudTS);
+        LS_orig.set('syncedAt', cloudTS);
         saveLocal();
       }
     }
+    return true;
+  } catch(e) { return false; }
+}
+
+function timeout(ms) {
+  return new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms));
+}
+
+async function pushInitialState() {
+  try {
+    await fbDb.collection('users').doc(fbUid).collection('data').doc('state').set({
+      categories: DEFAULT_CATEGORIES,
+      accounts: ['Banco Santander', 'Banco de Chile', 'Mercado Pago'],
+      transactions: [],
+      budgets: {},
+      updatedAt: fb.firestore.FieldValue.serverTimestamp()
+    });
+    state.categories = JSON.parse(JSON.stringify(DEFAULT_CATEGORIES));
+    state.accounts = ['Banco Santander', 'Banco de Chile', 'Mercado Pago'];
+    state.transactions = [];
+    state.budgets = {};
+    saveLocal();
   } catch(e) {}
 }
 
@@ -331,16 +376,17 @@ function startApp() {
 // Run Firebase init
 initFirebase();
 
-// If Firebase doesn't load (offline or blocked), fall back to local
+// If Firebase doesn't load (offline or blocked), fall back to local after 5s
 setTimeout(() => {
-  if (!window._appStarted) {
+  if (!window._appStarted && document.getElementById('authOverlay').style.display !== 'none') {
     window._appStarted = true;
-    document.getElementById('authOverlay').style.display = 'none';
+    showAuthOverlay(false);
     getStateSafe();
     startApp();
     fbReady = false;
+    toast('Modo sin conexion - datos locales', 'warning');
   }
-}, 3000);
+}, 5000);
 
 // ===== Core App =====
 
