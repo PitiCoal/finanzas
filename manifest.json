@@ -2,7 +2,7 @@
   "name": "Finanzas 2026",
   "short_name": "Finanzas",
   "description": "App de finanzas personales sincronizada",
-  "start_url": ".",
+  "start_url": "/finanzas/",
   "display": "standalone",
   "background_color": "#0f0f14",
   "theme_color": "#0f0f14",
