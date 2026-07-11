@@ -4,8 +4,8 @@
   "description": "App de finanzas personales sincronizada",
   "start_url": "/finanzas/",
   "display": "standalone",
-  "background_color": "#0f0f14",
-  "theme_color": "#0f0f14",
+  "background_color": "#0d0d14",
+  "theme_color": "#0d0d14",
   "orientation": "any",
   "icons": [
     {
