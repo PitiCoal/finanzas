@@ -38,14 +38,16 @@ header h1 { font-size: 1.3rem; background: linear-gradient(135deg, var(--green) 
 header .month-selector { display: flex; align-items: center; gap: 8px; }
 header .month-selector select { background: var(--surface2); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 0.9rem; cursor: pointer; }
 /* Desktop tabs */
-.tabs-desktop { display: flex; gap: 2px; background: var(--surface); padding: 6px 8px 0 8px; overflow-x: auto; border-bottom: 1px solid var(--border); position: sticky; top: 60px; z-index: 99; }
+.tabs-desktop { display: flex; gap: 2px; background: var(--surface); padding: 6px 8px 0 8px; overflow-x: auto; border-bottom: 1px solid var(--border); position: sticky; top: 56px; z-index: 99; }
 .tabs-desktop button { background: none; border: none; color: var(--text2); padding: 12px 18px; cursor: pointer; font-size: 0.9rem; border-radius: 8px 8px 0 0; white-space: nowrap; transition: all var(--transition); min-width: max-content; display: flex; align-items: center; gap: 6px; }
 .tabs-desktop button:hover { color: var(--text); background: var(--surface2); }
 .tabs-desktop button.active { color: var(--green); background: var(--bg); font-weight: 600; box-shadow: inset 0 -2px 0 var(--green); }
 .tab-icon { display: inline-block; width: 16px; height: 16px; vertical-align: middle; }
 /* Mobile bottom nav */
-.tabs-mobile { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: linear-gradient(180deg, var(--surface) 0%, #1e1e32 100%); border-top: 1px solid var(--border); padding: 4px 0 env(safe-area-inset-bottom, 4px) 0; justify-content: space-around; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-.tabs-mobile button { background: none; border: none; color: var(--text2); padding: 4px 6px; cursor: pointer; font-size: .6rem; border-radius: 6px; transition: all var(--transition); display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; flex: 1; }
+.tabs-mobile { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: linear-gradient(180deg, var(--surface) 0%, #1e1e32 100%); border-top: 1px solid var(--border); padding: 4px 0 env(safe-area-inset-bottom, 4px) 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; white-space: nowrap; justify-content: flex-start; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.tabs-mobile::-webkit-scrollbar { display: none; }
+.tabs-mobile button { flex: 0 0 auto; padding: 6px 10px; font-size: 0.68rem; border: none; background: none; color: var(--text2); cursor: pointer; transition: all var(--transition); border-radius: 8px; display: inline-flex; flex-direction: column; align-items: center; gap: 2px; min-width: 56px; }
+.tabs-mobile button.active { color: var(--green); background: var(--surface2); }
 .tabs-mobile button .tab-icon { width: 20px; height: 20px; }
 .tabs-mobile button span { font-size: .55rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 .tabs-mobile button:hover { color: var(--text); }
@@ -187,12 +189,38 @@ td.red { color: var(--red); font-weight: 600; }
   .charts-row { grid-template-columns: 1fr; }
   .metrics { grid-template-columns: repeat(2, 1fr); }
   .budget-row { grid-template-columns: 1.5fr 1fr 1fr; }
-  .budget-sub-header { grid-template-columns: 1fr 70px 70px 80px; font-size: .6rem; }
-  .budget-sub-row { grid-template-columns: 1fr 70px 70px 80px; gap: 4px; }
+  .budget-sub-header { grid-template-columns: 1fr 60px 60px 70px; font-size: .55rem; }
+  .budget-sub-row { grid-template-columns: 1fr 60px 60px 70px; gap: 4px; }
   .budget-cat-header { flex-direction: column; align-items: flex-start; }
-  header h1 { font-size: 1.1rem; }
-  .metric .value { font-size: 1.3rem; }
-  .card { padding: 16px; }
+  header { padding: 8px 10px; gap: 4px; }
+  header h1 { font-size: 1rem; }
+  header .month-selector select { font-size: .78rem; padding: 4px 8px; }
+  .resumen-table { font-size: .82rem; }
+  .metric .value { font-size: 1.2rem; }
+  .card { padding: 14px; }
+  .resumen-section { overflow-x: auto; }
+  .resumen-table .sub-row td { padding-left: 16px; font-size: .78rem; }
+  #refreshBtn { padding: 2px 5px !important; }
+}
+@media (max-width: 480px) {
+  .home-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .home-card { padding: 10px 4px; }
+  .home-card .home-icon { width: 24px; height: 24px; }
+  .home-card .home-label { font-size: .75rem; }
+  .metrics { grid-template-columns: 1fr 1fr; gap: 8px; }
+  header h1 { font-size: .9rem; }
+  header .month-selector select { font-size: .72rem; max-width: 110px; padding: 3px 6px; }
+  .budget-sub-header { grid-template-columns: 1fr 50px 50px 60px; font-size: .5rem; }
+  .budget-sub-row { grid-template-columns: 1fr 50px 50px 60px; gap: 3px; font-size: .78rem; }
+  .budget-sub-name { font-size: .75rem; }
+  .tabs-mobile button { padding: 4px 8px; font-size: .6rem; min-width: 48px; }
+  .tabs-mobile button .tab-icon { width: 18px; height: 18px; }
+  .card { padding: 12px; }
+  th, td { padding: 6px 8px; }
+  .filter-pill { padding: 4px 10px; font-size: .75rem; }
+  .resumen-table { font-size: .78rem; }
+  .resumen-section { overflow-x: auto; }
+  .inline-input { font-size: .8rem; }
 }
 </style>
 <script src="https://www.gstatic.com/firebasejs/11.7.0/firebase-app-compat.js" defer></script>
@@ -239,6 +267,7 @@ td.red { color: var(--red); font-weight: 600; }
     <button class="btn btn-sm btn-outline" onclick="changeMonth(1)">&#9654;</button>
   </div>
   <span id="syncBadge"></span>
+  <button class="btn btn-sm btn-outline" onclick="forceSync()" id="refreshBtn" title="Sincronizar" style="padding:4px 6px;line-height:1;border-radius:6px;display:inline-flex;align-items:center;gap:2px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
 </header>
 <nav class="tabs-desktop" id="tabs">
   <button data-tab="inicio" class="active"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Inicio</button>
@@ -355,17 +384,42 @@ function syncFromCloud() {
       var cloudTS = d.updatedAt ? d.updatedAt.toMillis() : 0;
       var localTS = LS.get('syncedAt', 0);
       if (cloudTS > localTS && d.transactions && d.transactions.length > 0) {
-        if (d.categories) state.categories = d.categories;
-        if (d.accounts) { state.accounts = d.accounts; if (state.accounts.length > 0 && typeof state.accounts[0] === 'string') { state.accounts = state.accounts.map(function(n){return{name:n,balance:0};}); } }
-        if (d.transactions) state.transactions = d.transactions;
-        if (d.budgets) state.budgets = d.budgets;
-        LS.set('syncedAt', cloudTS);
-        saveLocal();
+        applyCloudData(d, cloudTS);
         renderCurrentTab();
       }
     }
     syncToCloud();
   }).catch(function(){});
+}
+
+function forceSync() {
+  if (!fbUid || !fbDb) { toast('No hay sesión activa para sincronizar', 'warn'); return; }
+  var btn = document.getElementById('refreshBtn');
+  btn.style.opacity = '0.5'; btn.style.pointerEvents = 'none';
+  setTimeout(function() { btn.style.opacity = '1'; btn.style.pointerEvents = 'auto'; }, 2000);
+  fbDb.collection('users').doc(fbUid).collection('data').doc('state').get().then(function(doc) {
+    if (doc.exists && doc.data().updatedAt) {
+      var d = doc.data();
+      applyCloudData(d, d.updatedAt.toMillis());
+      toast('¡Datos sincronizados desde la nube!', 'success');
+    } else {
+      syncToCloud();
+      toast('Datos subidos a la nube', 'success');
+    }
+    renderCurrentTab();
+  }).catch(function() {
+    toast('Error al sincronizar. Revisa tu conexión.', 'error');
+    btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
+  });
+}
+
+function applyCloudData(d, cloudTS) {
+  if (d.categories) state.categories = d.categories;
+  if (d.accounts) { state.accounts = d.accounts; if (state.accounts.length > 0 && typeof state.accounts[0] === 'string') { state.accounts = state.accounts.map(function(n){return{name:n,balance:0};}); } }
+  if (d.transactions) state.transactions = d.transactions;
+  if (d.budgets) state.budgets = d.budgets;
+  LS.set('syncedAt', cloudTS);
+  saveLocal();
 }
 
 function syncToCloud() {
@@ -1026,6 +1080,7 @@ window.exportCSV=exportCSV; window.exportJSON=exportJSON; window.importCSV=impor
 window.resetAll=resetAll; window.changeMonth=changeMonth; window.onMonthChange=onMonthChange;
 window.doLogin=doLogin; window.doRegister=doRegister; window.doLogout=doLogout; window.showLogin=showLogin; window.hideLogin=hideLogin;
 window.updateBudgetBadge=updateBudgetBadge; window.sendNotification=sendNotification; window.renderResumen=renderResumen; window.renderInicio=renderInicio;
+window.forceSync=forceSync;
 
 const savedMonth = LS.get('currentMonth', null);
 if (savedMonth) state.currentMonth = savedMonth;
