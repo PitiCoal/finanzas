@@ -216,11 +216,21 @@ td.red { color: var(--red); font-weight: 600; }
   .tabs-mobile button { padding: 4px 8px; font-size: .6rem; min-width: 48px; }
   .tabs-mobile button .tab-icon { width: 18px; height: 18px; }
   .card { padding: 12px; }
-  th, td { padding: 6px 8px; }
+  th, td { padding: 5px 6px; }
   .filter-pill { padding: 4px 10px; font-size: .75rem; }
   .resumen-table { font-size: .78rem; }
   .resumen-section { overflow-x: auto; }
   .inline-input { font-size: .8rem; }
+  /* hide less important columns on tiny screens */
+  .proy-table th:nth-child(5),
+  .proy-table td:nth-child(5),
+  .proy-table th:nth-child(6),
+  .proy-table td:nth-child(6),
+  .proy-table th:nth-child(7),
+  .proy-table td:nth-child(7) { display: none; }
+  .mov-table th:nth-child(5),
+  .mov-table td:nth-child(5) { display: none; }
+}
 }
 </style>
 <script src="https://www.gstatic.com/firebasejs/11.7.0/firebase-app-compat.js" defer></script>
@@ -791,7 +801,7 @@ function renderResumen() {
   html += '<tr class="total-row"><td>TOTAL GASTOS</td><td class="right red">'+fmt(totalExpense)+'</td></tr></tbody></table></div>';
   // Presupuesto vs Real
   if (budgetTotal > 0) {
-    html += '<div class="card resumen-section"><h3>🎯 Presupuesto vs Real</h3><table class="resumen-table"><thead><tr style="color:var(--text2);font-size:.7rem;text-transform:uppercase;letter-spacing:.5px"><td>Categoría</td><td class="right">Presup.</td><td class="right">Real</td><td class="right">%</td></tr></thead><tbody>';
+    html += '<div class="card resumen-section"><h3>🎯 Presupuesto vs Real</h3><div style="overflow-x:auto"><table class="resumen-table"><thead><tr style="color:var(--text2);font-size:.7rem;text-transform:uppercase;letter-spacing:.5px"><td>Categoría</td><td class="right">Presup.</td><td class="right">Real</td><td class="right">%</td></tr></thead><tbody>';
     allExpenseSubcats().forEach(function(sc) {
       var k = sc.cat+'|'+sc.sub, budget = (state.budgets[month]||{})[k]||0, spent = expenseMap[k]||0;
       if (budget > 0 || spent > 0) {
@@ -801,14 +811,14 @@ function renderResumen() {
         html += '<tr><td style="padding-left:24px;font-size:.8rem">'+sc.cat+' / '+sc.sub+'</td><td class="right">'+fmt(budget)+'</td><td class="right '+cls+'">'+fmt(spent)+'</td><td class="right '+cls+'" style="font-weight:600">'+icon+' '+pct+'%</td></tr>';
       }
     });
-    html += '</tbody></table></div>';
+    html += '</tbody></table></div></div>';
   }
   // Transferencias
   if (transferTotal > 0) {
     var transfers = getTxByMonth(month).filter(function(t){return t.type==='transfer';});
-    html += '<div class="card resumen-section"><h3>🔄 Transferencias</h3><table class="resumen-table"><tbody>';
+    html += '<div class="card resumen-section"><h3>🔄 Transferencias</h3><div style="overflow-x:auto"><table class="resumen-table"><tbody>';
     transfers.forEach(function(t) { html += '<tr><td style="color:var(--text2)">'+t.date+'</td><td style="color:var(--purple)">'+t.account+' → '+t.toAccount+'</td><td class="right" style="color:var(--purple);font-weight:600">'+fmt(t.amount)+'</td></tr>'; });
-    html += '</tbody></table></div>';
+    html += '</tbody></table></div></div>';
   }
   if (transferTotal === 0 && budgetTotal === 0) {
     html += '<div class="card resumen-section"><h3>📊 Datos</h3><p style="color:var(--text2)">Sin presupuestos ni transferencias este mes. Define presupuestos en <a href="#" onclick="switchTab(\'planificacion\');return false" style="color:var(--green)">Planificación</a>.</p></div>';
@@ -863,7 +873,7 @@ function renderInicio() {
 // ---------- Proyeccion ----------
 function renderProyeccion() {
   const year = state.currentMonth.split('-')[0];
-  let html = '<div class="card"><h2>Proyeccion Anual '+year+'</h2><table><thead><tr><th>Mes</th><th>Ingresos</th><th>Gastos</th><th>Saldo</th><th>Saldo Acum</th><th>Presup</th><th>%</th></tr></thead><tbody>';
+  let html = '<div class="card"><h2>Proyeccion Anual '+year+'</h2><div style="overflow-x:auto"><table class="proy-table"><thead><tr><th>Mes</th><th>Ingresos</th><th>Gastos</th><th>Saldo</th><th>Saldo Acum</th><th>Presup</th><th>%</th></tr></thead><tbody>';
   let acum = 0;
   for (let m=1;m<=12;m++) {
     const key = year+'-'+String(m).padStart(2,'0'), inc = getIncomeTotal(key), exp = getExpenseTotal(key), saldo = inc-exp; acum += saldo;
@@ -872,11 +882,11 @@ function renderProyeccion() {
   }
   html += '<tr style="font-weight:700;background:var(--surface2)"><td>TOTAL</td><td class="right green">'+fmt(getYearTotal(year,'income'))+'</td><td class="right red">'+fmt(getYearTotal(year,'expense'))+'</td><td class="right" style="color:'+(acum>=0?'var(--green)':'var(--red)')+'">'+fmt(acum)+'</td><td colspan="3"></td></tr>';
   html += '<tr><td style="color:var(--purple)">Transferencias</td><td></td><td class="right" style="color:var(--purple)">'+fmt(getYearTotal(year,'transfer'))+'</td><td colspan="4"></td></tr>';
-  html += '</tbody></table></div>';
+  html += '</tbody></table></div></div>';
   // Cuentas
-  html += '<div class="card"><h3>Resumen Anual por Cuenta</h3><table><thead><tr><th>Cuenta</th><th>Ingresos</th><th>Gastos</th><th>Saldo</th></tr></thead><tbody>';
+  html += '<div class="card"><h3>Resumen Anual por Cuenta</h3><div style="overflow-x:auto"><table><thead><tr><th>Cuenta</th><th>Ingresos</th><th>Gastos</th><th>Saldo</th></tr></thead><tbody>';
   state.accounts.forEach(function(a,i) { var bal=getAccountBalance(a.name); html+='<tr><td><span class="account-dot '+getAccountColor(i)+'"></span> '+a.name+'</td><td class="right green">'+fmt(getAccountAllIncome(a.name))+'</td><td class="right red">'+fmt(getAccountAllExpense(a.name))+'</td><td class="right" style="color:'+(bal>=0?'var(--green)':'var(--red)')+'">'+fmt(bal)+'</td></tr>'; });
-  html += '</tbody></table></div>';
+  html += '</tbody></table></div></div>';
   // Annual bar chart
   html += '<div class="card"><h3>Ingresos vs Gastos - Todo el Ano</h3><div id="annualBarChart" class="bar-chart-container"></div></div>';
   document.getElementById('main').innerHTML = html;
@@ -911,7 +921,7 @@ function renderMovimientos() {
 }
 function renderMovTable(txList) {
   if (txList.length === 0) return '<div class="empty-state"><div class="icon">&#128236;</div><p>Sin movimientos</p></div>';
-  let h = '<table><thead><tr><th>Fecha</th><th>Tipo</th><th>Cuenta</th><th>Categoria/Detalle</th><th>Descripcion</th><th>Monto</th><th></th></tr></thead><tbody>';
+  let h = '<div style="overflow-x:auto"><table class="mov-table"><thead><tr><th>Fecha</th><th>Tipo</th><th>Cuenta</th><th>Categoria/Detalle</th><th>Descripcion</th><th>Monto</th><th></th></tr></thead><tbody>';
   txList.forEach(t => {
     if (t.type === 'transfer') {
       h += '<tr><td>'+t.date+'</td><td><span class="tag tag-transfer">Transferencia</span></td><td><span class="account-dot '+getAccountColor(Math.max(0,acctIdx(t.account)))+'" style="vertical-align:middle"></span> '+t.account+' &rarr; <span class="account-dot '+getAccountColor(Math.max(0,acctIdx(t.toAccount)))+'" style="vertical-align:middle"></span> '+t.toAccount+'</td><td>'+t.description+'</td><td>-</td><td class="right" style="color:var(--purple);font-weight:600">'+fmt(t.amount)+'</td><td><button class="btn btn-sm btn-danger" onclick="deleteTx(\''+t.id+'\')">x</button></td></tr>';
@@ -920,7 +930,7 @@ function renderMovTable(txList) {
       h += '<tr><td>'+t.date+'</td><td><span class="tag '+(t.type==='income'?'tag-income':'tag-expense')+'">'+(t.type==='income'?'Ingreso':'Gasto')+'</span></td><td><span class="account-dot '+cls+'" style="vertical-align:middle"></span> '+(t.account||acctName(0))+'</td><td>'+t.category+' / '+t.subcategory+'</td><td>'+(t.description||'-')+'</td><td class="right '+(t.type==='income'?'green':'red')+'">'+fmt(t.amount)+'</td><td><button class="btn btn-sm btn-danger" onclick="deleteTx(\''+t.id+'\')">x</button></td></tr>';
     }
   });
-  return h + '</tbody></table>';
+  return h + '</tbody></table></div>';
 }
 function filterTxs(account) {
   window._movFilter = account;
