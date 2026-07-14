@@ -180,70 +180,137 @@ td.red { color: var(--red); font-weight: 600; }
 .resumen-table .right { text-align: right; font-variant-numeric: tabular-nums; }
 /* ========== MOBILE NATIVE REDESIGN ========== */
 @media (max-width: 768px) {
+  html { font-size: 15px; }
+  body { line-height: 1.5; }
   .tabs-desktop { display: none; }
   .tabs-mobile { display: flex; }
-  main { padding: 12px 12px 80px; }
-  .form-row { grid-template-columns: 1fr; }
-  .charts-row { grid-template-columns: 1fr; }
+  main { max-width: 100%; padding: 8px 10px 80px; }
+  h2 { font-size: 1.1rem; margin-bottom: 8px; }
+  h3 { font-size: .9rem; margin-bottom: 6px; }
+  .form-row { grid-template-columns: 1fr; gap: 8px; }
+  .charts-row { grid-template-columns: 1fr; gap: 10px; }
   .budget-row { grid-template-columns: 1.5fr 1fr 1fr; }
-  .budget-sub-header { grid-template-columns: 1fr 60px 60px 70px; font-size: .55rem; }
-  .budget-sub-row { grid-template-columns: 1fr 60px 60px 70px; gap: 4px; }
+  .budget-sub-header { grid-template-columns: 1fr 55px 55px 60px; font-size: .5rem; padding: 4px 0; }
+  .budget-sub-row { grid-template-columns: 1fr 55px 55px 60px; gap: 3px; padding: 6px 0; font-size: .75rem; }
   .budget-cat-header { flex-direction: column; align-items: flex-start; }
-  .resumen-table { font-size: .82rem; }
-  .metric .value { font-size: 1.2rem; }
   .resumen-section { overflow-x: auto; }
-  .resumen-table .sub-row td { padding-left: 16px; font-size: .78rem; }
-  #refreshBtn { padding: 2px 5px !important; }
-  /* ---- Compact header ---- */
-  header { padding: 6px 10px; gap: 4px; }
-  header h1 { font-size: .95rem; }
-  header .month-selector select { font-size: .72rem; padding: 3px 8px; max-width: 120px; }
-  #syncBadge { font-size: .7rem; }
-  #syncBadge .btn { font-size: .6rem !important; padding: 2px 6px !important; }
-  /* ---- Flat cards no gradients/shadows ---- */
-  .card { background: var(--surface); padding: 14px; box-shadow: none; }
+  .resumen-table .sub-row td { padding-left: 12px; font-size: .75rem; }
+  .resumen-table td { padding: 4px 6px; }
+  #refreshBtn { padding: 2px 4px !important; }
+  /* ---- Scale down ---- */
+  .card { background: var(--surface); padding: 10px; margin-bottom: 8px; box-shadow: none; border-radius: 10px; }
   .card:hover { box-shadow: none; }
-  .metric { background: var(--surface); padding: 14px 10px; box-shadow: none; }
+  .metric { background: var(--surface); padding: 10px 6px; box-shadow: none; border-radius: 10px; }
   .metric:hover { transform: none; box-shadow: none; }
-  .chart-container { background: var(--surface); padding: 12px; }
+  .metric .value { font-size: 1.1rem; margin-top: 4px; }
+  .metric .label { font-size: .65rem; }
+  .metrics { grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+  .chart-container { background: var(--surface); padding: 10px; }
   .category-block { background: var(--surface); }
-  .budget-summary { background: var(--surface); }
-  .budget-category-card { background: var(--surface); }
-  .home-card { background: var(--surface); padding: 14px 6px; }
+  .budget-summary { background: var(--surface); padding: 12px; }
+  .budget-summary-main { font-size: .78rem; gap: 4px; }
+  .budget-summary-main strong { font-size: .9rem; }
+  .budget-category-card { background: var(--surface); padding: 12px; }
+  .home-card { background: var(--surface); padding: 10px 4px; }
   .home-card:hover { transform: none; box-shadow: none; }
-  .home-quick { background: var(--surface); }
+  .home-quick { background: var(--surface); padding: 12px; }
   .progress-fill { transition: width .3s ease; }
+  /* ---- Header single-row compact ---- */
+  header { padding: 4px 8px; gap: 4px; flex-wrap: nowrap; }
+  header h1 { font-size: .82rem; letter-spacing: 0; }
+  header .month-selector { gap: 3px; flex-shrink: 0; }
+  header .month-selector select { font-size: .65rem; padding: 2px 4px; max-width: 95px; }
+  header .month-selector .btn { padding: 2px 4px !important; height: 26px !important; font-size: .6rem !important; min-width: 20px; }
+  header #syncBadge { font-size: .6rem; display: flex; align-items: center; gap: 2px; }
+  header #syncBadge .btn { font-size: .5rem !important; padding: 1px 4px !important; height: 20px !important; }
+  header #refreshBtn { padding: 2px 3px !important; height: 24px !important; width: 24px !important; }
   /* ---- Touch-friendly inputs ---- */
-  .form-group input, .form-group select, .form-group textarea { height: 48px; font-size: 16px; -webkit-appearance: none; appearance: none; }
-  .inline-input { height: 44px; font-size: 16px; -webkit-appearance: none; appearance: none; }
-  .btn { padding: 14px 22px; height: 48px; }
-  .btn-sm { padding: 10px 16px; height: 40px; }
-  .account-pill { padding: 12px 18px; }
-  .filter-pill { padding: 10px 16px; }
+  .form-group { margin-bottom: 8px; }
+  .form-group label { font-size: .72rem; margin-bottom: 3px; }
+  .form-group input, .form-group select, .form-group textarea { height: 44px; font-size: 16px; padding: 8px 10px; -webkit-appearance: none; appearance: none; }
+  .inline-input { height: 40px; font-size: 15px; padding: 6px 8px; -webkit-appearance: none; appearance: none; }
+  .btn { padding: 10px 16px; height: 44px; font-size: .82rem; }
+  .btn-sm { padding: 8px 12px; height: 36px; font-size: .75rem; }
+  .account-pill { padding: 8px 12px; font-size: .78rem; }
+  .filter-pill { padding: 8px 12px; font-size: .75rem; }
+  .filter-pills { gap: 4px; margin-bottom: 6px; }
+  /* ---- Tables compact ---- */
+  table { font-size: .75rem; }
+  th, td { padding: 5px 6px; }
+  th { font-size: .65rem; }
+  .resumen-table { font-size: .75rem; }
+  /* ---- Home grid ---- */
+  .home-grid { gap: 5px; margin-bottom: 8px; }
+  .home-card .home-icon { width: 22px; height: 22px; }
+  .home-card .home-label { font-size: .68rem; }
+  .home-quick-row { font-size: .8rem; padding: 6px 0; }
+  /* ---- Charts ---- */
+  .charts-row { gap: 8px; }
+  .chart-container { padding: 8px; }
+  .chart-container h3 { font-size: .82rem; margin-bottom: 6px; }
   /* ---- Table → card list for movil ---- */
   .mov-table { display: none; }
   .mov-list { display: block; }
+  .mov-list-item { padding: 8px 0; gap: 8px; }
+  .mov-list-icon { width: 32px; height: 32px; font-size: .9rem; }
+  .mov-list-body .top .amount { font-size: .85rem; }
+  .mov-list-body .sub { font-size: .68rem; gap: 4px; }
+  .mov-list-body .sub .tag { font-size: .55rem; padding: 0 6px; }
+  .proy-table th:nth-child(4),
+  .proy-table td:nth-child(4),
   .proy-table th:nth-child(5),
   .proy-table td:nth-child(5) { display: none; }
+  /* ---- Safe area top ---- */
+  header { padding-top: max(4px, env(safe-area-inset-top, 4px)); }
+  /* ---- Toast ---- */
+  .toast { top: 60px; right: 10px; left: 10px; max-width: none; font-size: .78rem; padding: 10px 14px; }
+  /* ---- Empty state ---- */
+  .empty-state { padding: 24px 16px; }
+  .empty-state .icon { font-size: 2rem; }
+  /* ---- Alerts ---- */
+  .alert { padding: 8px 12px; font-size: .78rem; margin-bottom: 6px; }
+  /* ---- Auth overlay mobile ---- */
+  #authOverlay > div { max-width: 300px !important; }
+  #authOverlay h1 { font-size: 1.3rem !important; }
 }
 @media (max-width: 480px) {
-  .home-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-  .home-card { padding: 10px 4px; }
-  .home-card .home-icon { width: 24px; height: 24px; }
-  .home-card .home-label { font-size: .72rem; }
-  .metrics { grid-template-columns: 1fr 1fr; gap: 6px; }
-  header h1 { font-size: .85rem; }
-  header .month-selector select { font-size: .68rem; max-width: 100px; padding: 2px 6px; }
-  .budget-sub-header { grid-template-columns: 1fr 50px 50px 60px; font-size: .5rem; }
-  .budget-sub-row { grid-template-columns: 1fr 50px 50px 60px; gap: 3px; font-size: .75rem; }
-  .budget-sub-name { font-size: .7rem; }
-  .card { padding: 10px; }
-  .filter-pill { padding: 8px 12px; font-size: .72rem; }
-  .resumen-table { font-size: .75rem; }
+  html { font-size: 14px; }
+  .home-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .home-card { padding: 8px 2px; }
+  .home-card .home-icon { width: 20px; height: 20px; }
+  .home-card .home-label { font-size: .65rem; }
+  main { padding: 6px 8px 76px; }
+  header h1 { font-size: .75rem; }
+  header .month-selector select { font-size: .6rem; max-width: 80px; padding: 1px 3px; }
+  header .month-selector .btn { height: 22px !important; font-size: .55rem !important; }
+  .budget-sub-header { grid-template-columns: 1fr 40px 40px 50px; font-size: .45rem; }
+  .budget-sub-row { grid-template-columns: 1fr 40px 40px 50px; gap: 2px; font-size: .68rem; }
+  .budget-sub-name { font-size: .65rem; }
+  .card { padding: 8px; margin-bottom: 6px; }
+  .filter-pill { padding: 6px 10px; font-size: .68rem; }
+  .resumen-table { font-size: .68rem; }
   .resumen-section { overflow-x: auto; }
-  .inline-input { font-size: 15px; }
-  .form-group input, .form-group select, .form-group textarea { height: 44px; font-size: 15px; }
-  .btn { height: 44px; padding: 12px 16px; }
+  .inline-input { font-size: 14px; height: 36px; }
+  .form-group input, .form-group select, .form-group textarea { height: 40px; font-size: 14px; }
+  .btn { height: 40px; padding: 8px 12px; font-size: .78rem; }
+  .btn-sm { height: 32px; padding: 6px 10px; font-size: .7rem; }
+  th, td { padding: 3px 4px; }
+  table { font-size: .68rem; }
+  .metric { padding: 8px 4px; }
+  .metric .value { font-size: .95rem; }
+  .metric .label { font-size: .6rem; }
+  .metrics { gap: 4px; }
+  .home-card .home-icon { width: 18px; height: 18px; }
+  .home-card .home-label { font-size: .6rem; }
+  .home-quick-row { font-size: .75rem; padding: 5px 0; }
+  h2 { font-size: 1rem; }
+  h3 { font-size: .82rem; }
+  .budget-summary-main { font-size: .72rem; }
+  .account-pill { padding: 6px 10px; font-size: .72rem; }
+  .tabs-mobile { padding: 2px 0 env(safe-area-inset-bottom, 2px) 0; }
+  .tabs-mobile button { padding: 4px 2px; }
+  .tabs-mobile button .tab-icon { width: 20px; height: 20px; }
+  .tabs-mobile button span { font-size: .5rem; }
 }
 /* ---- Mobile list items (replaces tables on small screens) ---- */
 .mov-list { display: none; }
@@ -371,12 +438,19 @@ let fbDb = null, fbAuth = null, fbUid = null, fbReady = false;
 
 function updateSyncBadge() {
   var el = document.getElementById('syncBadge'); if (!el) return;
+  var isMobile = window.innerWidth <= 768;
   if (fbUid) {
-    el.innerHTML = '<span class="account-dot acct-0" style="vertical-align:middle;margin-right:4px"></span><span style="color:var(--green);font-size:.8rem">Conectado</span> <button class="btn btn-sm btn-outline" onclick="doLogout()" style="font-size:.65rem;padding:2px 8px">Salir</button>';
+    el.innerHTML = isMobile
+      ? '<span class="account-dot acct-0" style="vertical-align:middle" title="Conectado"></span>'
+      : '<span class="account-dot acct-0" style="vertical-align:middle;margin-right:4px"></span><span style="color:var(--green);font-size:.8rem">Conectado</span> <button class="btn btn-sm btn-outline" onclick="doLogout()" style="font-size:.65rem;padding:2px 8px">Salir</button>';
   } else if (fbReady && !fbUid) {
-    el.innerHTML = '<button class="btn btn-sm btn-primary" onclick="showLogin()" style="font-size:.7rem;padding:4px 10px">Conectar</button>';
+    el.innerHTML = isMobile
+      ? '<button class="btn btn-sm btn-outline" onclick="showLogin()" style="font-size:.55rem;padding:1px 5px;height:22px">🔗</button>'
+      : '<button class="btn btn-sm btn-primary" onclick="showLogin()" style="font-size:.7rem;padding:4px 10px">Conectar</button>';
   } else {
-    el.innerHTML = '<span style="color:var(--text2);font-size:.75rem">Local</span>';
+    el.innerHTML = isMobile
+      ? '<span class="account-dot" style="background:var(--text2);width:8px;height:8px;vertical-align:middle;display:inline-block;border-radius:50%" title="Local"></span>'
+      : '<span style="color:var(--text2);font-size:.75rem">Local</span>';
   }
 }
 
