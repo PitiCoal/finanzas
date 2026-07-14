@@ -1,12 +1,16 @@
 {
-  "name": "Finanzas 2026",
+  "name": "Finanzas PITI",
   "short_name": "Finanzas",
-  "description": "App de finanzas personales sincronizada",
+  "description": "App de finanzas personales",
   "start_url": "/finanzas/",
   "display": "standalone",
-  "background_color": "#0d0d14",
-  "theme_color": "#0d0d14",
-  "orientation": "any",
+  "display_override": ["standalone", "window-controls-overlay"],
+  "background_color": "#0a0a12",
+  "theme_color": "#0a0a12",
+  "orientation": "portrait",
+  "categories": ["finance", "productivity"],
+  "lang": "es-CL",
+  "scope": "/finanzas/",
   "icons": [
     {
       "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%230f0f14'/><text x='96' y='116' text-anchor='middle' font-size='90' fill='%234ade80'>$</text></svg>",
