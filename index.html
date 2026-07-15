@@ -44,13 +44,18 @@ header .month-selector select { background: var(--surface2); color: var(--text);
 .tabs-desktop button.active { color: var(--green); background: var(--bg); font-weight: 600; box-shadow: inset 0 -2px 0 var(--green); }
 .tab-icon { display: inline-block; width: 16px; height: 16px; vertical-align: middle; }
 /* Mobile bottom nav */
-.tabs-mobile { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: linear-gradient(180deg, var(--surface) 0%, #1e1e32 100%); border-top: 1px solid var(--border); padding: 6px 0 env(safe-area-inset-bottom, 8px) 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-.tabs-mobile button { flex: 1; padding: 8px 6px 4px; font-size: 0.75rem; border: none; background: none; color: var(--text2); cursor: pointer; transition: all var(--transition); border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 0; }
-.tabs-mobile button.active { color: var(--green); background: var(--surface2); }
-.tabs-mobile button .tab-icon { width: 26px; height: 26px; }
-.tabs-mobile button span { font-size: .65rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; font-weight: 500; }
+.tabs-mobile { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: linear-gradient(180deg, var(--surface) 0%, #1e1e32 100%); border-top: 1px solid var(--border); padding: 6px 0 env(safe-area-inset-bottom, 8px) 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); gap: 2px; }
+.tabs-mobile button { flex: 1; padding: 10px 4px 6px; font-size: 0.82rem; border: none; background: none; color: var(--text2); cursor: pointer; transition: all var(--transition); border-radius: 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
+.tabs-mobile button.active { color: var(--green); background: rgba(74,222,128,.1); }
+.tabs-mobile button .tab-icon { width: 28px; height: 28px; }
+.tabs-mobile button span { font-size: .72rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; font-weight: 600; }
 .tabs-mobile button:hover { color: var(--text); }
 .tabs-mobile button.active { color: var(--green); }
+/* ---- FAB button ---- */
+.fab { display: none; position: fixed; bottom: 80px; right: 16px; z-index: 1000; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--green2) 0%, #16a34a 100%); color: #000; border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(74,222,128,.4); transition: all var(--transition); align-items: center; justify-content: center; }
+.fab svg { width: 28px; height: 28px; stroke: #000; stroke-width: 2.5; }
+.fab:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(74,222,128,.5); }
+.fab:active { transform: scale(0.95); }
 main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 80px; }
 h2 { font-size: 1.35rem; margin-bottom: 16px; color: var(--text); font-weight: 700; }
 h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--text2); font-weight: 600; }
@@ -184,6 +189,7 @@ td.red { color: var(--red); font-weight: 600; }
   body { line-height: 1.5; }
   .tabs-desktop { display: none; }
   .tabs-mobile { display: flex; }
+  .fab { display: flex; }
   main { max-width: 100%; padding: 8px 10px 80px; }
   h2 { font-size: 1.1rem; margin-bottom: 8px; }
   h3 { font-size: .9rem; margin-bottom: 6px; }
@@ -307,10 +313,12 @@ td.red { color: var(--red); font-weight: 600; }
   h3 { font-size: .82rem; }
   .budget-summary-main { font-size: .72rem; }
   .account-pill { padding: 6px 10px; font-size: .72rem; }
-  .tabs-mobile { padding: 4px 0 env(safe-area-inset-bottom, 6px) 0; }
-  .tabs-mobile button { padding: 6px 4px 3px; gap: 2px; }
-  .tabs-mobile button .tab-icon { width: 22px; height: 22px; }
-  .tabs-mobile button span { font-size: .58rem; }
+  .tabs-mobile { padding: 4px 0 env(safe-area-inset-bottom, 6px) 0; gap: 1px; }
+  .tabs-mobile button { padding: 8px 2px 4px; gap: 3px; }
+  .tabs-mobile button .tab-icon { width: 24px; height: 24px; }
+  .tabs-mobile button span { font-size: .65rem; }
+  .fab { width: 48px; height: 48px; bottom: 72px; right: 12px; }
+  .fab svg { width: 24px; height: 24px; }
 }
 /* ---- Mobile list items (replaces tables on small screens) ---- */
 .mov-list { display: none; }
@@ -404,17 +412,18 @@ main.fade-out { opacity: 0.4; }
 </nav>
 <nav class="tabs-mobile" id="tabsMobile">
   <button data-tab="inicio" class="active"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Inicio</span></button>
-  <button data-tab="registrar"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>Nuevo</span></button>
   <button data-tab="dashboard"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Panel</span></button>
-  <button data-tab="proyeccion"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span>Proy.</span></button>
   <button id="moreBtn" onclick="toggleMoreSheet()"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg><span>Más</span></button>
 </nav>
+<!-- FAB: Nuevo -->
+<button class="fab" id="fabBtn" onclick="fabNew()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg></button>
 <!-- Más bottom sheet -->
 <div class="more-overlay" id="moreOverlay" onclick="toggleMoreSheet()"></div>
 <div class="more-sheet" id="moreSheet">
   <div class="handle"></div>
   <div class="more-item" onclick="moreNav('resumen')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Resumen Mensual</span></div>
   <div class="more-item" onclick="moreNav('planificacion')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Planificación <span id="budgetBadgeMobile" class="budget-badge"></span></span></div>
+  <div class="more-item" onclick="moreNav('proyeccion')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span>Proyección</span></div>
   <div class="more-item" onclick="moreNav('movimientos')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span>Movimientos</span></div>
   <div class="more-item" onclick="moreNav('configuracion')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Configuración</span></div>
   <div class="more-item" onclick="moreNav('datos')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Datos / Exportar</span></div>
@@ -1186,6 +1195,7 @@ function resetAll() {
 }
 
 // ---------- Más bottom sheet ----------
+function fabNew() { switchTab('registrar'); }
 function toggleMoreSheet() {
   var overlay = document.getElementById('moreOverlay');
   var sheet = document.getElementById('moreSheet');
@@ -1286,7 +1296,7 @@ window.exportCSV=exportCSV; window.exportJSON=exportJSON; window.importCSV=impor
 window.resetAll=resetAll; window.changeMonth=changeMonth; window.onMonthChange=onMonthChange;
 window.doLogin=doLogin; window.doRegister=doRegister; window.doLogout=doLogout; window.showLogin=showLogin; window.hideLogin=hideLogin;
 window.updateBudgetBadge=updateBudgetBadge; window.sendNotification=sendNotification; window.renderResumen=renderResumen; window.renderInicio=renderInicio;
-window.forceSync=forceSync; window.toggleMoreSheet=toggleMoreSheet; window.moreNav=moreNav;
+window.forceSync=forceSync; window.toggleMoreSheet=toggleMoreSheet; window.moreNav=moreNav; window.fabNew=fabNew;
 
 const savedMonth = LS.get('currentMonth', null);
 if (savedMonth) state.currentMonth = savedMonth;
