@@ -44,11 +44,11 @@ header .month-selector select { background: var(--surface2); color: var(--text);
 .tabs-desktop button.active { color: var(--green); background: var(--bg); font-weight: 600; box-shadow: inset 0 -2px 0 var(--green); }
 .tab-icon { display: inline-block; width: 16px; height: 16px; vertical-align: middle; }
 /* Mobile bottom nav */
-.tabs-mobile { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: linear-gradient(180deg, var(--surface) 0%, #1e1e32 100%); border-top: 1px solid var(--border); padding: 4px 0 env(safe-area-inset-bottom, 4px) 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-.tabs-mobile button { flex: 1; padding: 6px 4px; font-size: 0.68rem; border: none; background: none; color: var(--text2); cursor: pointer; transition: all var(--transition); border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; }
+.tabs-mobile { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: linear-gradient(180deg, var(--surface) 0%, #1e1e32 100%); border-top: 1px solid var(--border); padding: 6px 0 env(safe-area-inset-bottom, 8px) 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.tabs-mobile button { flex: 1; padding: 8px 6px 4px; font-size: 0.75rem; border: none; background: none; color: var(--text2); cursor: pointer; transition: all var(--transition); border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 0; }
 .tabs-mobile button.active { color: var(--green); background: var(--surface2); }
-.tabs-mobile button .tab-icon { width: 24px; height: 24px; }
-.tabs-mobile button span { font-size: .6rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.tabs-mobile button .tab-icon { width: 26px; height: 26px; }
+.tabs-mobile button span { font-size: .65rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; font-weight: 500; }
 .tabs-mobile button:hover { color: var(--text); }
 .tabs-mobile button.active { color: var(--green); }
 main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 80px; }
@@ -307,10 +307,10 @@ td.red { color: var(--red); font-weight: 600; }
   h3 { font-size: .82rem; }
   .budget-summary-main { font-size: .72rem; }
   .account-pill { padding: 6px 10px; font-size: .72rem; }
-  .tabs-mobile { padding: 2px 0 env(safe-area-inset-bottom, 2px) 0; }
-  .tabs-mobile button { padding: 4px 2px; }
-  .tabs-mobile button .tab-icon { width: 20px; height: 20px; }
-  .tabs-mobile button span { font-size: .5rem; }
+  .tabs-mobile { padding: 4px 0 env(safe-area-inset-bottom, 6px) 0; }
+  .tabs-mobile button { padding: 6px 4px 3px; gap: 2px; }
+  .tabs-mobile button .tab-icon { width: 22px; height: 22px; }
+  .tabs-mobile button span { font-size: .58rem; }
 }
 /* ---- Mobile list items (replaces tables on small screens) ---- */
 .mov-list { display: none; }
