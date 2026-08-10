@@ -2,39 +2,42 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Finanzas 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #0a0a12;
-  --surface: #2a2a48;
-  --surface2: #3a3a64;
-  --border: #52527a;
+  --bg: #000000;
+  --surface: rgba(28, 28, 30, 0.85);
+  --surface2: rgba(44, 44, 46, 0.85);
+  --border: rgba(255, 255, 255, 0.1);
   --text: #ffffff;
-  --text2: #ccccee;
-  --green: #4ade80;
-  --green2: #22c55e;
-  --green-dim: rgba(74,222,128,.2);
-  --red: #ff7a7a;
-  --red2: #ef4444;
-  --red-dim: rgba(248,113,113,.2);
-  --amber: #fbbf24;
-  --amber-dim: rgba(251,191,36,.2);
-  --blue: #60a5fa;
-  --purple: #a78bfa;
-  --cyan: #22d3ee;
-  --pink: #f472b6;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --shadow: 0 2px 12px rgba(0,0,0,.5);
-  --shadow-lg: 0 4px 30px rgba(0,0,0,.7);
-  --transition: .2s ease;
+  --text2: rgba(235, 235, 245, 0.6);
+  --green: #34c759;
+  --green2: #30d158;
+  --green-dim: rgba(52, 199, 89, 0.15);
+  --red: #ff3b30;
+  --red2: #ff453a;
+  --red-dim: rgba(255, 59, 48, 0.15);
+  --amber: #ffcc00;
+  --amber-dim: rgba(255, 204, 0, 0.15);
+  --blue: #0a84ff;
+  --purple: #bf5af2;
+  --cyan: #64d2ff;
+  --pink: #ff375f;
+  --radius: 20px;
+  --radius-sm: 12px;
+  --shadow: 0 8px 24px rgba(0,0,0,0.6);
+  --shadow-lg: 0 12px 36px rgba(0,0,0,0.8);
+  --transition: .25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 html { font-size: 17px; }
-body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-header { background: linear-gradient(135deg, var(--surface) 0%, #353558 100%); border-bottom: 1px solid var(--border); padding: 12px 20px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-header h1 { font-size: 1.3rem; background: linear-gradient(135deg, var(--green) 0%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 800; letter-spacing: 0.5px; }
+body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+header { background: var(--surface); border-bottom: 0.5px solid var(--border); padding: max(16px, env(safe-area-inset-top, 16px)) 20px 12px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+header h1 { font-size: 1.3rem; color: var(--text); font-weight: 800; letter-spacing: -0.5px; }
 header .month-selector { display: flex; align-items: center; gap: 8px; }
 header .month-selector select { background: var(--surface2); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 0.9rem; cursor: pointer; }
 /* Desktop tabs */
@@ -44,7 +47,7 @@ header .month-selector select { background: var(--surface2); color: var(--text);
 .tabs-desktop button.active { color: var(--green); background: var(--bg); font-weight: 600; box-shadow: inset 0 -2px 0 var(--green); }
 .tab-icon { display: inline-block; width: 16px; height: 16px; vertical-align: middle; }
 /* Mobile bottom nav */
-.tabs-mobile { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: linear-gradient(180deg, var(--surface) 0%, #1e1e32 100%); border-top: 1px solid var(--border); padding: 6px 0 env(safe-area-inset-bottom, 8px) 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); gap: 2px; }
+.tabs-mobile { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: var(--surface); border-top: 0.5px solid var(--border); padding: 8px 0 env(safe-area-inset-bottom, 12px) 0; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); gap: 2px; }
 .tabs-mobile button { flex: 1; padding: 10px 4px 6px; font-size: 0.82rem; border: none; background: none; color: var(--text2); cursor: pointer; transition: all var(--transition); border-radius: 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
 .tabs-mobile button.active { color: var(--green); background: rgba(74,222,128,.1); }
 .tabs-mobile button .tab-icon { width: 28px; height: 28px; }
@@ -59,7 +62,7 @@ header .month-selector select { background: var(--surface2); color: var(--text);
 main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 80px; }
 h2 { font-size: 1.35rem; margin-bottom: 16px; color: var(--text); font-weight: 700; }
 h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--text2); font-weight: 600; }
-.card { background: linear-gradient(135deg, var(--surface) 0%, #353558 100%); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); transition: box-shadow var(--transition); }
+.card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); transition: box-shadow var(--transition); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
 .card:hover { box-shadow: var(--shadow-lg); }
 .form-group { margin-bottom: 14px; }
 .form-group label { display: block; font-size: 0.85rem; color: var(--text2); margin-bottom: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -77,7 +80,7 @@ h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--text2); font-weight: 6
 .btn-amber { background: linear-gradient(135deg, var(--amber) 0%, #f59e0b 100%); color: #000; }
 .btn-amber:hover { transform: translateY(-1px); }
 .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; }
-.metric { background: linear-gradient(135deg, var(--surface2) 0%, #474774 100%); border-radius: var(--radius); padding: 18px 14px; text-align: center; border: 1px solid var(--border); transition: all var(--transition); }
+.metric { background: var(--surface2); border-radius: var(--radius); padding: 18px 14px; text-align: center; border: 0.5px solid var(--border); transition: all var(--transition); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .metric:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 .metric .label { font-size: 0.78rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
 .metric .value { font-size: 1.5rem; font-weight: 800; margin-top: 6px; letter-spacing: -0.5px; }
@@ -85,7 +88,7 @@ h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--text2); font-weight: 6
 .metric .value.red { color: var(--red); }
 .metric .account-info { display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; font-size: .85rem; }
 .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.chart-container { background: linear-gradient(135deg, var(--surface2) 0%, #474774 100%); border-radius: var(--radius); padding: 16px; text-align: center; border: 1px solid var(--border); }
+.chart-container { background: var(--surface2); border-radius: var(--radius); padding: 16px; text-align: center; border: 0.5px solid var(--border); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .chart-container svg { max-width: 100%; height: auto; }
 .bar-chart-container { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
@@ -149,10 +152,10 @@ td.red { color: var(--red); font-weight: 600; }
 .filter-pill { padding: 6px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 500; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); transition: all .12s; }
 .filter-pill:hover { border-color: var(--green); color: var(--text); }
 .filter-pill.active { background: rgba(74,222,128,.15); border-color: var(--green); color: var(--green); }
-.budget-summary { background: linear-gradient(135deg, var(--surface2) 0%, #474774 100%); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+.budget-summary { background: var(--surface2); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; border: 0.5px solid var(--border); }
 .budget-summary-main { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; font-size: .9rem; }
 .budget-summary-main strong { font-size: 1.1rem; }
-.budget-category-card { background: linear-gradient(135deg, var(--surface2) 0%, #474774 100%); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; border-left: 4px solid var(--green); }
+.budget-category-card { background: var(--surface2); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; border: 0.5px solid var(--border); border-left: 4px solid var(--green); }
 .budget-cat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px; }
 .budget-cat-name { font-weight: 700; font-size: 1rem; }
 .budget-cat-total { font-size: .85rem; color: var(--text2); }
@@ -165,11 +168,11 @@ td.red { color: var(--red); font-weight: 600; }
 .budget-sub-bar { display: flex; align-items: center; gap: 6px; }
 /* Home grid */
 .home-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
-.home-card { background: linear-gradient(135deg, var(--surface2) 0%, #474774 100%); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 8px; text-align: center; cursor: pointer; transition: all var(--transition); }
+.home-card { background: var(--surface2); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 16px 8px; text-align: center; cursor: pointer; transition: all var(--transition); }
 .home-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--green); }
 .home-card .home-icon { width: 28px; height: 28px; display: block; margin: 0 auto 6px; color: var(--green); }
 .home-card .home-label { font-size: .82rem; font-weight: 600; color: var(--text); }
-.home-quick { background: linear-gradient(135deg, var(--surface2) 0%, #474774 100%); border-radius: var(--radius); padding: 16px; }
+.home-quick { background: var(--surface2); border-radius: var(--radius); border: 0.5px solid var(--border); padding: 16px; }
 .home-quick-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: .9rem; }
 .home-quick-row:last-child { border-bottom: none; }
 .home-quick-row .label { color: var(--text2); }
@@ -231,15 +234,15 @@ td.red { color: var(--red); font-weight: 600; }
   header #syncBadge .btn { font-size: .5rem !important; padding: 1px 4px !important; height: 20px !important; }
   header #refreshBtn { padding: 2px 3px !important; height: 24px !important; width: 24px !important; }
   /* ---- Touch-friendly inputs ---- */
-  .form-group { margin-bottom: 8px; }
-  .form-group label { font-size: .72rem; margin-bottom: 3px; }
-  .form-group input, .form-group select, .form-group textarea { height: 44px; font-size: 16px; padding: 8px 10px; -webkit-appearance: none; appearance: none; }
-  .inline-input { height: 40px; font-size: 15px; padding: 6px 8px; -webkit-appearance: none; appearance: none; }
-  .btn { padding: 10px 16px; height: 44px; font-size: .82rem; }
-  .btn-sm { padding: 8px 12px; height: 36px; font-size: .75rem; }
-  .account-pill { padding: 8px 12px; font-size: .78rem; }
-  .filter-pill { padding: 8px 12px; font-size: .75rem; }
-  .filter-pills { gap: 4px; margin-bottom: 6px; }
+  .form-group { margin-bottom: 12px; }
+  .form-group label { font-size: .75rem; margin-bottom: 4px; }
+  .form-group input, .form-group select, .form-group textarea { height: 48px; font-size: 16px; padding: 10px 12px; -webkit-appearance: none; appearance: none; }
+  .inline-input { height: 44px; font-size: 16px; padding: 8px 10px; -webkit-appearance: none; appearance: none; }
+  .btn { padding: 10px 16px; height: 48px; font-size: .9rem; border-radius: 12px; }
+  .btn-sm { padding: 8px 12px; height: 40px; font-size: .8rem; }
+  .account-pill { padding: 10px 14px; font-size: .85rem; }
+  .filter-pill { padding: 8px 14px; font-size: .8rem; }
+  .filter-pills { gap: 6px; margin-bottom: 10px; }
   /* ---- Tables compact ---- */
   table { font-size: .75rem; }
   th, td { padding: 5px 6px; }
@@ -352,6 +355,28 @@ td.red { color: var(--red); font-weight: 600; }
 /* ---- Tab transitions ---- */
 main { transition: opacity .15s ease; }
 main.fade-out { opacity: 0.4; }
+/* ---- Numpad & Quick Add Modal ---- */
+.numpad-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 1001; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.numpad-overlay.open { display: block; }
+.numpad-sheet { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1002; background: var(--surface); border-top: 0.5px solid var(--border); border-radius: 20px 20px 0 0; padding: 20px 16px calc(20px + env(safe-area-inset-bottom, 16px)); transform: translateY(100%); transition: transform .25s cubic-bezier(.4,0,.2,1); }
+.numpad-sheet.open { transform: translateY(0); }
+.numpad-display { font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 20px; padding: 10px; border-bottom: 2px solid var(--green); color: var(--green); font-variant-numeric: tabular-nums; }
+.numpad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.numpad-btn { background: var(--surface2); border: none; border-radius: 12px; font-size: 1.5rem; font-weight: 600; color: var(--text); padding: 16px 0; cursor: pointer; transition: all .1s; display: flex; align-items: center; justify-content: center; }
+.numpad-btn:active { transform: scale(0.95); background: var(--border); }
+.numpad-btn.action { background: var(--border); color: var(--text2); }
+.numpad-btn.confirm { background: var(--green); color: #000; grid-column: span 3; font-size: 1.1rem; padding: 14px 0; margin-top: 8px; }
+/* ---- Lock Screen ---- */
+.lock-screen-overlay { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
+.lock-screen-overlay.open { display: flex; }
+.lock-screen-title { font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: 24px; text-align: center; }
+.pin-dots { display: flex; gap: 16px; margin-bottom: 40px; }
+.pin-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border); transition: all 0.1s ease; }
+.pin-dot.filled { background-color: var(--green); border-color: var(--green); transform: scale(1.1); }
+.lock-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 280px; width: 100%; }
+.lock-btn { background: var(--surface); border: 0.5px solid var(--border); border-radius: 50%; width: 68px; height: 68px; font-size: 1.5rem; font-weight: 600; color: var(--text); cursor: pointer; transition: all .1s; display: flex; align-items: center; justify-content: center; margin: 0 auto; }
+.lock-btn:active { background: var(--surface2); transform: scale(0.92); }
+.lock-btn.action { border-color: transparent; background: transparent; font-size: 1.1rem; color: var(--text2); }
 </style>
 <script src="https://www.gstatic.com/firebasejs/11.7.0/firebase-app-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/11.7.0/firebase-auth-compat.js" defer></script>
@@ -365,6 +390,30 @@ main.fade-out { opacity: 0.4; }
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%230f0f14'/><text x='96' y='116' text-anchor='middle' font-size='90' fill='%234ade80'>$</text></svg>">
 </head>
 <body>
+<div id="lockScreen" class="lock-screen-overlay">
+  <div style="font-size:3rem;margin-bottom:8px">🔒</div>
+  <div class="lock-screen-title" id="lockScreenTitle">Ingresa tu código PIN</div>
+  <div class="pin-dots">
+    <div class="pin-dot" id="pinDot0"></div>
+    <div class="pin-dot" id="pinDot1"></div>
+    <div class="pin-dot" id="pinDot2"></div>
+    <div class="pin-dot" id="pinDot3"></div>
+  </div>
+  <div class="lock-grid">
+    <button class="lock-btn" onclick="lockScreenPress('1')">1</button>
+    <button class="lock-btn" onclick="lockScreenPress('2')">2</button>
+    <button class="lock-btn" onclick="lockScreenPress('3')">3</button>
+    <button class="lock-btn" onclick="lockScreenPress('4')">4</button>
+    <button class="lock-btn" onclick="lockScreenPress('5')">5</button>
+    <button class="lock-btn" onclick="lockScreenPress('6')">6</button>
+    <button class="lock-btn" onclick="lockScreenPress('7')">7</button>
+    <button class="lock-btn" onclick="lockScreenPress('8')">8</button>
+    <button class="lock-btn" onclick="lockScreenPress('9')">9</button>
+    <button class="lock-btn action" onclick="lockScreenPress('cancel')" id="lockCancelBtn" style="visibility:hidden">Cancelar</button>
+    <button class="lock-btn" onclick="lockScreenPress('0')">0</button>
+    <button class="lock-btn action" onclick="lockScreenPress('del')">✕</button>
+  </div>
+</div>
 <div id="authOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;padding:20px">
   <div style="text-align:center;max-width:380px;width:100%">
     <div style="font-size:3rem;margin-bottom:8px">💰</div>
@@ -427,6 +476,27 @@ main.fade-out { opacity: 0.4; }
   <div class="more-item" onclick="moreNav('movimientos')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span>Movimientos</span></div>
   <div class="more-item" onclick="moreNav('configuracion')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Configuración</span></div>
   <div class="more-item" onclick="moreNav('datos')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>Datos / Exportar</span></div>
+</div>
+<!-- Numpad Sheet -->
+<div class="numpad-overlay" id="numpadOverlay" onclick="hideNumpad()"></div>
+<div class="numpad-sheet" id="numpadSheet">
+  <div class="handle" style="width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 12px;"></div>
+  <div class="numpad-display" id="numpadDisplay">$0</div>
+  <div class="numpad-grid">
+    <button class="numpad-btn" onclick="numpadPress('1')">1</button>
+    <button class="numpad-btn" onclick="numpadPress('2')">2</button>
+    <button class="numpad-btn" onclick="numpadPress('3')">3</button>
+    <button class="numpad-btn" onclick="numpadPress('4')">4</button>
+    <button class="numpad-btn" onclick="numpadPress('5')">5</button>
+    <button class="numpad-btn" onclick="numpadPress('6')">6</button>
+    <button class="numpad-btn" onclick="numpadPress('7')">7</button>
+    <button class="numpad-btn" onclick="numpadPress('8')">8</button>
+    <button class="numpad-btn" onclick="numpadPress('9')">9</button>
+    <button class="numpad-btn action" onclick="numpadPress('000')">000</button>
+    <button class="numpad-btn" onclick="numpadPress('0')">0</button>
+    <button class="numpad-btn action" onclick="numpadPress('del')"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg></button>
+    <button class="numpad-btn confirm" onclick="numpadConfirm()">Confirmar Monto</button>
+  </div>
 </div>
 <main id="main"></main>
 <div id="toastContainer"></div>
@@ -577,20 +647,44 @@ function syncToCloud() {
   }).catch(function(){});
 }
 
-function saveLocal() { LS.set('categories', state.categories); LS.set('transactions', state.transactions); LS.set('budgets', state.budgets); LS.set('accounts', state.accounts); }
+function saveLocal() {
+  try {
+    // Store backup of current values in LS before saving, only if they are not empty
+    if (state.transactions && state.transactions.length > 0) {
+      localStorage.setItem('fnz_backup_transactions', JSON.stringify(state.transactions));
+    }
+    if (state.categories && state.categories.length > 0) {
+      localStorage.setItem('fnz_backup_categories', JSON.stringify(state.categories));
+    }
+    if (state.budgets && Object.keys(state.budgets).length > 0) {
+      localStorage.setItem('fnz_backup_budgets', JSON.stringify(state.budgets));
+    }
+    if (state.accounts && state.accounts.length > 0) {
+      localStorage.setItem('fnz_backup_accounts', JSON.stringify(state.accounts));
+    }
+
+    LS.set('categories', state.categories);
+    LS.set('transactions', state.transactions);
+    LS.set('budgets', state.budgets);
+    LS.set('accounts', state.accounts);
+  } catch(e) {
+    console.error("Error saving locally, backup kept", e);
+    toast("Error al guardar datos localmente", "error");
+  }
+}
 function saveAll() { saveLocal(); LS.set('syncedAt', Date.now()); if (fbUid && fbDb) syncToCloud(); }
 
 const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const COLORS = ['#4ade80','#60a5fa','#f472b6','#fbbf24','#a78bfa','#22d3ee','#f87171','#fb923c','#34d399','#818cf8','#e879f9','#fcd34d','#38bdf8','#a3e635','#c084fc','#fda4af'];
 
 const DEFAULT_CATEGORIES = [
-  { name: 'COMIDA', type: 'expense', subcategories: ['Supermercado / Despensa','Comida rapida','Salidas'] },
-  { name: 'VIVIENDA', type: 'expense', subcategories: ['Arriendo / Hipoteca','Servicios publicos','Mantención','Seguro hogar'] },
-  { name: 'TRANSPORTE', type: 'expense', subcategories: ['Transporte publico','Viaje de trabajo','Uber / Taxi'] },
-  { name: 'AUTO', type: 'expense', subcategories: ['Bencina','Mantención','Estacionamiento','Seguro de auto','Mecanico'] },
-  { name: 'VIDA', type: 'expense', subcategories: ['Atencion medica','Belleza y bienestar','Eventos de la vida','Aficiones','Desarrollo personal','Suscripciones','Ocio / Tiempo libre'] },
-  { name: 'COMPRAS', type: 'expense', subcategories: ['Electronica'] },
-  { name: 'INGRESOS E INVERSIONES', type: 'income', subcategories: ['Sueldo Liquido','Otros Ingresos / Ventas','Reembolsos','Ahorros','Inversiones'] }
+  { name: '🍔 COMIDA', type: 'expense', subcategories: ['Supermercado / Despensa','Comida rapida','Salidas'] },
+  { name: '🏠 VIVIENDA', type: 'expense', subcategories: ['Arriendo / Hipoteca','Servicios publicos','Mantención','Seguro hogar'] },
+  { name: '🚌 TRANSPORTE', type: 'expense', subcategories: ['Transporte publico','Viaje de trabajo','Uber / Taxi'] },
+  { name: '🚗 AUTO', type: 'expense', subcategories: ['Bencina','Mantención','Estacionamiento','Seguro de auto','Mecanico'] },
+  { name: '🌟 VIDA', type: 'expense', subcategories: ['Atencion medica','Belleza y bienestar','Eventos de la vida','Aficiones','Desarrollo personal','Suscripciones','Ocio / Tiempo libre'] },
+  { name: '🛍️ COMPRAS', type: 'expense', subcategories: ['Electronica'] },
+  { name: '💰 INGRESOS E INVERSIONES', type: 'income', subcategories: ['Sueldo Liquido','Otros Ingresos / Ventas','Reembolsos','Ahorros','Inversiones'] }
 ];
 
 function uid() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 6); }
@@ -603,16 +697,49 @@ const LS = {
   set(k, v) { localStorage.setItem('fnz_'+k, JSON.stringify(v)); }
 };
 
-let state = {
-  categories: LS.get('categories', null),
-  transactions: LS.get('transactions', []),
-  budgets: LS.get('budgets', {}),
-  accounts: LS.get('accounts', null),
-  currentMonth: nowKey(),
-  currentTab: 'inicio'
-};
-if (!state.categories) { state.categories = JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)); LS.set('categories', state.categories); }
-if (!state.accounts) { state.accounts = [{name:'Banco Santander',balance:0},{name:'Banco de Chile',balance:0},{name:'Mercado Pago',balance:0}]; LS.set('accounts', state.accounts); }
+function loadStateWithBackup() {
+  let categories = LS.get('categories', null);
+  let transactions = LS.get('transactions', null);
+  let budgets = LS.get('budgets', null);
+  let accounts = LS.get('accounts', null);
+
+  // Restore from backup if empty but backup exists (failsafe)
+  if (!transactions || transactions.length === 0) {
+    try {
+      const btx = localStorage.getItem('fnz_backup_transactions');
+      if (btx) { transactions = JSON.parse(btx); console.log("Restaurando transacciones desde backup local..."); }
+    } catch(e){}
+  }
+  if (!categories || categories.length === 0) {
+    try {
+      const bcat = localStorage.getItem('fnz_backup_categories');
+      if (bcat) { categories = JSON.parse(bcat); console.log("Restaurando categorías desde backup local..."); }
+    } catch(e){}
+  }
+  if (!budgets || Object.keys(budgets).length === 0) {
+    try {
+      const bbud = localStorage.getItem('fnz_backup_budgets');
+      if (bbud) { budgets = JSON.parse(bbud); console.log("Restaurando presupuestos desde backup local..."); }
+    } catch(e){}
+  }
+  if (!accounts || accounts.length === 0) {
+    try {
+      const bacct = localStorage.getItem('fnz_backup_accounts');
+      if (bacct) { accounts = JSON.parse(bacct); console.log("Restaurando cuentas desde backup local..."); }
+    } catch(e){}
+  }
+
+  return {
+    categories: categories || JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
+    transactions: transactions || [],
+    budgets: budgets || {},
+    accounts: accounts || [{name:'Banco Santander',balance:0},{name:'Banco de Chile',balance:0},{name:'Mercado Pago',balance:0}],
+    currentMonth: nowKey(),
+    currentTab: 'inicio'
+  };
+}
+
+let state = loadStateWithBackup();
 // Migrate old format (array of strings) to new format (array of objects)
 if (state.accounts.length > 0 && typeof state.accounts[0] === 'string') {
   state.accounts = state.accounts.map(function(n) { return {name:n, balance:0}; });
@@ -705,7 +832,7 @@ function pieChart(container, data) {
 
 // ---------- Registrar ----------
 function renderRegistrar() {
-  let html = '<div class="card"><h2>Nuevo Movimiento</h2><div class="form-row"><div class="form-group"><label>Tipo</label><select id="txType" onchange="onTxTypeChange()"><option value="expense">Gasto</option><option value="income">Ingreso</option><option value="transfer">Transferencia</option></select></div><div class="form-group" id="gCatGroup"><label>Categoria</label><select id="txCat" onchange="onTxCatChange()"></select></div></div><div class="form-row" id="gSubRow"><div class="form-group"><label>Subcategoria</label><select id="txSub"></select></div><div class="form-group"><label>Monto ($)</label><input type="number" id="txAmount" placeholder="Ej: 50000" min="0" step="100"></div></div><div class="form-row" id="gTransferRow" style="display:none"><div class="form-group"><label>Cuenta Origen</label><select id="txFromAcct"></select></div><div class="form-group"><label>Cuenta Destino</label><select id="txToAcct"></select></div></div><div class="form-row"><div class="form-group" id="gMontoTransfer" style="display:none"><label>Monto ($)</label><input type="number" id="txAmountT" placeholder="Ej: 200000" min="0" step="100"></div></div><div class="form-row"><div class="form-group"><label>Fecha</label><input type="date" id="txDate"></div><div class="form-group"><label>Descripcion (opcional)</label><input type="text" id="txDesc" placeholder="Ej: Compra semanal"></div></div><div class="form-group" id="gAcctPills"><label>Cuenta</label><div class="account-pills" id="acctPills"></div></div><button class="btn btn-primary" onclick="addTransaction()" style="width:100%;margin-top:8px;">Guardar Movimiento</button></div>';
+  let html = '<div class="card"><h2>Nuevo Movimiento</h2><div class="form-row"><div class="form-group"><label>Tipo</label><select id="txType" onchange="onTxTypeChange()"><option value="expense">Gasto</option><option value="income">Ingreso</option><option value="transfer">Transferencia</option></select></div><div class="form-group" id="gCatGroup"><label>Categoria</label><select id="txCat" onchange="onTxCatChange()"></select></div></div><div class="form-row" id="gSubRow"><div class="form-group"><label>Subcategoria</label><select id="txSub"></select></div><div class="form-group"><label>Monto ($)</label><input type="text" id="txAmount" placeholder="Ej: 50.000" readonly onclick="showNumpad(\'txAmount\')" style="cursor:pointer;caret-color:transparent"></div></div><div class="form-row" id="gTransferRow" style="display:none"><div class="form-group"><label>Cuenta Origen</label><select id="txFromAcct"></select></div><div class="form-group"><label>Cuenta Destino</label><select id="txToAcct"></select></div></div><div class="form-row"><div class="form-group" id="gMontoTransfer" style="display:none"><label>Monto ($)</label><input type="text" id="txAmountT" placeholder="Ej: 200.000" readonly onclick="showNumpad(\'txAmountT\')" style="cursor:pointer;caret-color:transparent"></div></div><div class="form-row"><div class="form-group"><label>Fecha</label><input type="date" id="txDate"></div><div class="form-group"><label>Descripcion (opcional)</label><input type="text" id="txDesc" placeholder="Ej: Compra semanal"></div></div><div class="form-group" id="gAcctPills"><label>Cuenta</label><div class="account-pills" id="acctPills"></div></div><button class="btn btn-primary" onclick="addTransaction()" style="width:100%;margin-top:8px;">Guardar Movimiento</button></div>';
   const d = new Date(); const today = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
   document.getElementById('main').innerHTML = html;
   document.getElementById('txDate').value = today;
@@ -756,7 +883,7 @@ function addTransaction() {
   if (type === 'transfer') {
     const fromAcct = document.getElementById('txFromAcct').value;
     const toAcct = document.getElementById('txToAcct').value;
-    const amount = parseInt(document.getElementById('txAmountT').value) || 0;
+    const amount = parseInt(document.getElementById('txAmountT').value.replace(/[^0-9]/g, '')) || 0;
     if (!fromAcct || !toAcct || fromAcct === toAcct) return toast('Selecciona cuentas distintas para transferir', 'error');
     if (amount <= 0) return toast('Ingresa un monto', 'error');
     state.transactions.push({ id: uid(), type: 'transfer', account: fromAcct, toAccount: toAcct, amount: amount, date: date, description: description || '' });
@@ -765,7 +892,7 @@ function addTransaction() {
   } else {
     const category = document.getElementById('txCat').value;
     const subcategory = document.getElementById('txSub').value;
-    const amount = parseInt(document.getElementById('txAmount').value) || 0;
+    const amount = parseInt(document.getElementById('txAmount').value.replace(/[^0-9]/g, '')) || 0;
     const account = window._selAcct || acctName(0);
     if (!category || !subcategory || amount <= 0) return toast('Completa categoria, subcategoria y monto', 'error');
     state.transactions.push({ id: uid(), type: type, category: category, subcategory: subcategory, amount: amount, date: date, description: description || '', account: account });
@@ -781,6 +908,190 @@ function addTransaction() {
     toast('Movimiento guardado!', 'success');
   }
 }
+
+// ---------- Numpad Logic ----------
+let _numpadTarget = null;
+let _numpadValue = "0";
+
+function showNumpad(targetId) {
+  _numpadTarget = targetId;
+  const el = document.getElementById(targetId);
+  _numpadValue = (el.value || "0").replace(/[^0-9]/g, '');
+  if (_numpadValue === "" || _numpadValue === "0") _numpadValue = "0";
+  updateNumpadDisplay();
+  document.getElementById('numpadOverlay').classList.add('open');
+  document.getElementById('numpadSheet').classList.add('open');
+}
+
+function hideNumpad() {
+  document.getElementById('numpadOverlay').classList.remove('open');
+  document.getElementById('numpadSheet').classList.remove('open');
+  _numpadTarget = null;
+}
+
+function numpadPress(val) {
+  if (val === 'del') {
+    _numpadValue = _numpadValue.length > 1 ? _numpadValue.slice(0, -1) : "0";
+  } else {
+    if (_numpadValue === "0") {
+      _numpadValue = val === '000' ? "0" : val;
+    } else {
+      _numpadValue += val;
+    }
+  }
+  // Max length to prevent overflow
+  if (_numpadValue.length > 10) _numpadValue = _numpadValue.slice(0, 10);
+  updateNumpadDisplay();
+}
+
+function updateNumpadDisplay() {
+  document.getElementById('numpadDisplay').textContent = fmt(parseInt(_numpadValue) || 0);
+}
+
+function numpadConfirm() {
+  if (_numpadTarget) {
+    const el = document.getElementById(_numpadTarget);
+    if (el) {
+      el.value = parseInt(_numpadValue) || 0;
+      // In Registrar tab we don't display the 'fmt' inside the input if it's type="number".
+      // But we changed it to type="text". So we can display formatted.
+      // However, addTransaction() uses parseInt(el.value). If el.value has dots or $, parseInt will break.
+      // Wait, parseInt("50.000") is 50. We need to store raw number in data attribute or format it appropriately.
+      // Let's store raw value in data-val and format the visible text.
+      el.dataset.val = parseInt(_numpadValue) || 0;
+      el.value = fmt(parseInt(_numpadValue) || 0);
+    }
+  }
+  hideNumpad();
+}
+// ----------------------------------
+
+// ---------- Security PIN Logic ----------
+let _pinInput = "";
+let _pinCallback = null;
+let _tempPin = "";
+
+function showLockScreen(callback, modeText, showCancel) {
+  _pinInput = "";
+  _pinCallback = callback;
+  updatePinDots();
+  const titleEl = document.getElementById('lockScreenTitle');
+  if (titleEl) titleEl.textContent = modeText || "Ingresa tu código PIN";
+  
+  const cancelBtn = document.getElementById('lockCancelBtn');
+  if (cancelBtn) {
+    if (showCancel) {
+      cancelBtn.style.visibility = 'visible';
+    } else {
+      cancelBtn.style.visibility = 'hidden';
+    }
+  }
+  document.getElementById('lockScreen').classList.add('open');
+}
+
+function hideLockScreen() {
+  document.getElementById('lockScreen').classList.remove('open');
+  _pinInput = "";
+}
+
+function updatePinDots() {
+  for (let i = 0; i < 4; i++) {
+    const dot = document.getElementById('pinDot' + i);
+    if (dot) {
+      if (i < _pinInput.length) {
+        dot.classList.add('filled');
+      } else {
+        dot.classList.remove('filled');
+      }
+    }
+  }
+}
+
+function lockScreenPress(val) {
+  if (val === 'cancel') {
+    hideLockScreen();
+    if (_pinCallback) _pinCallback(null);
+    return;
+  }
+  
+  if (val === 'del') {
+    _pinInput = _pinInput.slice(0, -1);
+    updatePinDots();
+    return;
+  }
+  
+  if (_pinInput.length < 4) {
+    _pinInput += val;
+    updatePinDots();
+  }
+  
+  if (_pinInput.length === 4) {
+    setTimeout(function() {
+      const entered = _pinInput;
+      _pinInput = "";
+      updatePinDots();
+      
+      if (_pinCallback) {
+        _pinCallback(entered);
+      } else {
+        const savedPin = LS.get('pin', null);
+        if (entered === savedPin) {
+          hideLockScreen();
+          switchTab('inicio');
+        } else {
+          toast('PIN incorrecto', 'error');
+          const screen = document.getElementById('lockScreen');
+          if (screen) {
+            screen.style.transform = 'translateX(-10px)';
+            setTimeout(() => screen.style.transform = 'translateX(10px)', 50);
+            setTimeout(() => screen.style.transform = 'translateX(-10px)', 100);
+            setTimeout(() => screen.style.transform = 'translateX(0)', 150);
+          }
+        }
+      }
+    }, 150);
+  }
+}
+
+function configurePin(mode) {
+  if (mode === 'enable') {
+    // 1. Ask for new PIN
+    showLockScreen(function(newPin) {
+      if (!newPin) return; // User cancelled
+      _tempPin = newPin;
+      // 2. Confirm PIN
+      showLockScreen(function(confirmPin) {
+        if (!confirmPin) return;
+        if (confirmPin === _tempPin) {
+          LS.set('pin', _tempPin);
+          toast('PIN configurado correctamente', 'success');
+          hideLockScreen();
+          renderConfiguracion();
+        } else {
+          toast('Los PIN no coinciden. Intenta de nuevo.', 'error');
+          hideLockScreen();
+        }
+      }, "Confirma tu nuevo código PIN", true);
+    }, "Crea tu código PIN", true);
+  } else if (mode === 'disable') {
+    // Ask for current PIN to disable
+    const savedPin = LS.get('pin', null);
+    if (!savedPin) return;
+    showLockScreen(function(enteredPin) {
+      if (!enteredPin) return;
+      if (enteredPin === savedPin) {
+        LS.set('pin', null);
+        toast('PIN desactivado', 'success');
+        hideLockScreen();
+        renderConfiguracion();
+      } else {
+        toast('PIN incorrecto. No se pudo desactivar.', 'error');
+        hideLockScreen();
+      }
+    }, "Ingresa tu PIN actual para desactivar", true);
+  }
+}
+// ----------------------------------
 
 // ---------- Dashboard ----------
 function renderDashboard() {
@@ -1106,6 +1417,17 @@ function renderConfiguracion() {
     html += '<div style="padding:10px 12px;border:1px solid var(--border);border-radius:6px;margin-bottom:6px;background:var(--surface2)"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px"><span class="account-info"><span class="account-dot '+getAccountColor(i)+'"></span><strong>'+a.name+'</strong></span><span style="color:var(--text2);font-size:.8rem">Saldo actual: <strong style="color:'+(bal>=0?'var(--green)':'var(--red)')+'">'+fmt(bal)+'</strong></span></div><div style="display:flex;gap:8px;margin-top:8px;align-items:center"><input type="text" id="renameAcct_'+i+'" placeholder="Renombrar" class="inline-input" style="width:120px"><input type="number" id="balAcct_'+i+'" placeholder="Saldo inicial" class="inline-input" style="width:110px" value="'+(a.balance||0)+'"><button class="btn btn-sm btn-outline" onclick="renameAccount('+i+')">Actualizar</button><button class="btn btn-sm btn-danger" onclick="deleteAccount('+i+')">x</button></div></div>';
   });
   html += '</div>';
+  
+  // Seguridad (PIN)
+  const pinSet = LS.get('pin', null) !== null;
+  html += '<div class="card" style="margin-top:16px"><h2>Seguridad</h2><p style="color:var(--text2);margin-bottom:12px;font-size:.85rem">Protege tus datos con un código PIN de acceso local</p>';
+  if (pinSet) {
+    html += '<p style="color:var(--green);font-weight:600;margin-bottom:12px;font-size:.85rem">✓ PIN de acceso activado</p><button class="btn btn-danger btn-sm" onclick="configurePin(\'disable\')">Desactivar PIN</button>';
+  } else {
+    html += '<p style="color:var(--text2);margin-bottom:12px;font-size:.85rem">PIN de acceso desactivado</p><button class="btn btn-primary btn-sm" onclick="configurePin(\'enable\')">Activar PIN</button>';
+  }
+  html += '</div>';
+
   document.getElementById('main').innerHTML = html;
 }
 function addCategory() {
@@ -1195,7 +1517,13 @@ function resetAll() {
 }
 
 // ---------- Más bottom sheet ----------
-function fabNew() { switchTab('registrar'); }
+function fabNew() { 
+  switchTab('registrar'); 
+  setTimeout(function(){ 
+    if(document.getElementById('txType').value === 'transfer') showNumpad('txAmountT');
+    else showNumpad('txAmount'); 
+  }, 200); 
+}
 function toggleMoreSheet() {
   var overlay = document.getElementById('moreOverlay');
   var sheet = document.getElementById('moreSheet');
@@ -1297,13 +1625,21 @@ window.resetAll=resetAll; window.changeMonth=changeMonth; window.onMonthChange=o
 window.doLogin=doLogin; window.doRegister=doRegister; window.doLogout=doLogout; window.showLogin=showLogin; window.hideLogin=hideLogin;
 window.updateBudgetBadge=updateBudgetBadge; window.sendNotification=sendNotification; window.renderResumen=renderResumen; window.renderInicio=renderInicio;
 window.forceSync=forceSync; window.toggleMoreSheet=toggleMoreSheet; window.moreNav=moreNav; window.fabNew=fabNew;
+window.lockScreenPress=lockScreenPress; window.configurePin=configurePin;
 
 const savedMonth = LS.get('currentMonth', null);
 if (savedMonth) state.currentMonth = savedMonth;
 document.getElementById('monthSelect').value = state.currentMonth;
 // Migrate old transactions
 let migrated=0; state.transactions.forEach(t=>{if(!t.account){t.account=acctName(0);migrated++;}}); if(migrated>0)saveAll();
-switchTab('inicio');
+
+// Check if security PIN is enabled
+const hasPin = LS.get('pin', null) !== null;
+if (hasPin) {
+  showLockScreen(null, "Ingresa tu código PIN", false);
+} else {
+  switchTab('inicio');
+}
 // Show budget alerts on load
 setTimeout(function() { updateBudgetBadge(); var cnt = getAlertCount(); if (cnt.danger > 0) sendNotification('Finanzas 2026', cnt.danger+' categoría'+(cnt.danger>1?'s':'')+' excedieron su presupuesto este mes'); }, 2000);
 // Firebase inicia despues de que la app ya cargo (non-blocking)
