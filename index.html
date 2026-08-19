@@ -297,6 +297,11 @@ main.fade-out { opacity: 0.4; }
 .lock-btn { background: var(--surface); border: 0.5px solid var(--border); border-radius: 50%; width: 68px; height: 68px; font-size: 1.5rem; font-weight: 600; color: var(--text); cursor: pointer; transition: all .1s; display: flex; align-items: center; justify-content: center; margin: 0 auto; }
 .lock-btn:active { background: var(--surface2); transform: scale(0.92); }
 .lock-btn.action { border-color: transparent; background: transparent; font-size: 1.1rem; color: var(--text2); }
+/* ---- Tx Bottom Sheet ---- */
+.tx-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 1001; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.tx-overlay.open { display: block; }
+.tx-sheet { position: fixed; bottom: 0; left: 50%; width: 100%; max-width: 500px; z-index: 1002; background: rgba(28,28,30,0.95); border-top: 0.5px solid rgba(255,255,255,0.08); border-radius: 24px 24px 0 0; padding: 16px 16px calc(24px + env(safe-area-inset-bottom, 16px)); transform: translate(-50%, 100%); transition: transform .3s cubic-bezier(0.25, 1, 0.5, 1); max-height: 90vh; overflow-y: auto; backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
+.tx-sheet.open { transform: translate(-50%, 0); }
 </style>
 <script src="https://www.gstatic.com/firebasejs/11.7.0/firebase-app-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/11.7.0/firebase-auth-compat.js" defer></script>
@@ -417,6 +422,12 @@ main.fade-out { opacity: 0.4; }
     <button class="numpad-btn action" onclick="numpadPress('del')"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg></button>
     <button class="numpad-btn confirm" onclick="numpadConfirm()">Confirmar Monto</button>
   </div>
+</div>
+<!-- Registrar TX Sheet -->
+<div class="tx-overlay" id="txOverlay" onclick="closeTxSheet()"></div>
+<div class="tx-sheet" id="txSheet">
+  <div class="handle" style="width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 16px;"></div>
+  <div id="txSheetContent"></div>
 </div>
 <main id="main"></main>
 <div id="toastContainer"></div>
@@ -747,11 +758,22 @@ function pieChart(container, data) {
 }
 
 // ---------- Registrar ----------
+function openTxSheet() {
+  if (navigator.vibrate) navigator.vibrate(15);
+  renderRegistrar();
+  document.getElementById('txOverlay').classList.add('open');
+  document.getElementById('txSheet').classList.add('open');
+}
+function closeTxSheet() {
+  document.getElementById('txOverlay').classList.remove('open');
+  document.getElementById('txSheet').classList.remove('open');
+  window._editingTxId = null;
+}
 function renderRegistrar() {
   window._editingTxId = null;
-  let html = '<div class="card"><h2>Nuevo Movimiento</h2><div class="form-row"><div class="form-group"><label>Tipo</label><select id="txType" onchange="onTxTypeChange()"><option value="expense">Gasto</option><option value="income">Ingreso</option><option value="transfer">Transferencia</option></select></div><div class="form-group" id="gCatGroup"><label>Categoria</label><select id="txCat" onchange="onTxCatChange()"></select></div></div><div class="form-row" id="gSubRow"><div class="form-group"><label>Subcategoria</label><select id="txSub"></select></div><div class="form-group"><label>Monto ($)</label><input type="text" id="txAmount" placeholder="Ej: 50.000" readonly onclick="showNumpad(\'txAmount\')" style="cursor:pointer;caret-color:transparent"></div></div><div class="form-row" id="gTransferRow" style="display:none"><div class="form-group"><label>Cuenta Origen</label><select id="txFromAcct"></select></div><div class="form-group"><label>Cuenta Destino</label><select id="txToAcct"></select></div></div><div class="form-row"><div class="form-group" id="gMontoTransfer" style="display:none"><label>Monto ($)</label><input type="text" id="txAmountT" placeholder="Ej: 200.000" readonly onclick="showNumpad(\'txAmountT\')" style="cursor:pointer;caret-color:transparent"></div></div><div class="form-row"><div class="form-group"><label>Fecha</label><input type="date" id="txDate"></div><div class="form-group"><label>Descripcion (opcional)</label><input type="text" id="txDesc" placeholder="Ej: Compra semanal"></div></div><div class="form-group" id="gAcctPills"><label>Cuenta</label><div class="account-pills" id="acctPills"></div></div><button id="saveTxBtn" class="btn btn-primary" onclick="addTransaction()" style="width:100%;margin-top:8px;">Guardar Movimiento</button></div>';
+  let html = '<div><h2 style="margin-top:0;font-size:1.4rem;font-weight:800;letter-spacing:-0.5px">Nuevo Movimiento</h2><div class="form-row"><div class="form-group"><label>Tipo</label><select id="txType" onchange="onTxTypeChange()"><option value="expense">Gasto</option><option value="income">Ingreso</option><option value="transfer">Transferencia</option></select></div><div class="form-group" id="gCatGroup"><label>Categoria</label><select id="txCat" onchange="onTxCatChange()"></select></div></div><div class="form-row" id="gSubRow"><div class="form-group"><label>Subcategoria</label><select id="txSub"></select></div><div class="form-group"><label>Monto ($)</label><input type="text" id="txAmount" placeholder="Ej: 50.000" readonly onclick="showNumpad(\'txAmount\')" style="cursor:pointer;caret-color:transparent;font-size:1.3rem;font-weight:800;color:var(--green)"></div></div><div class="form-row" id="gTransferRow" style="display:none"><div class="form-group"><label>Cuenta Origen</label><select id="txFromAcct"></select></div><div class="form-group"><label>Cuenta Destino</label><select id="txToAcct"></select></div></div><div class="form-row"><div class="form-group" id="gMontoTransfer" style="display:none"><label>Monto ($)</label><input type="text" id="txAmountT" placeholder="Ej: 200.000" readonly onclick="showNumpad(\'txAmountT\')" style="cursor:pointer;caret-color:transparent;font-size:1.3rem;font-weight:800;color:var(--purple)"></div></div><div class="form-row"><div class="form-group"><label>Fecha</label><input type="date" id="txDate"></div><div class="form-group"><label>Descripcion (opcional)</label><input type="text" id="txDesc" placeholder="Ej: Compra semanal"></div></div><div class="form-group" id="gAcctPills"><label>Cuenta</label><div class="account-pills" id="acctPills"></div></div><button id="saveTxBtn" class="btn btn-primary" onclick="addTransaction()" style="width:100%;margin-top:12px;height:56px;font-size:1.1rem;border-radius:16px;">Guardar Movimiento</button></div>';
   const d = new Date(); const today = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-  document.getElementById('main').innerHTML = html;
+  document.getElementById('txSheetContent').innerHTML = html;
   document.getElementById('txDate').value = today;
   renderAccountPills();
   onTxTypeChange();
@@ -835,11 +857,12 @@ function addTransaction() {
     toast('Movimiento guardado!', 'success');
   }
   
+  if (navigator.vibrate) navigator.vibrate([20, 50, 20]);
   window._editingTxId = null;
   saveAll();
-  document.getElementById('txDesc').value = '';
-  const btn = document.getElementById('saveTxBtn');
-  if (btn) { btn.textContent = 'Guardar Movimiento'; btn.classList.replace('btn-amber', 'btn-primary'); }
+  closeTxSheet();
+  if (state.currentSection === 'movimientos') renderMovimientos();
+  else if (state.currentSection === 'inicio' || state.currentSection === 'dashboard') showSection(state.currentSection);
 }
 
 // ---------- Numpad Logic ----------
@@ -1303,37 +1326,46 @@ function filterTxs(account) {
   const isMobile = true;
   document.getElementById('movTableContainer').innerHTML = isMobile ? renderMovList(filtered) : renderMovTable(filtered);
 }
-function deleteTx(id) { state.transactions = state.transactions.filter(t => t.id!==id); saveAll(); renderMovimientos(); toast('Eliminado', 'success'); }
-function deleteAllMonth() { if(!confirm('Borrar TODOS los movimientos de este mes?'))return; state.transactions=state.transactions.filter(t=>!t.date.startsWith(state.currentMonth));saveAll();renderMovimientos();toast('Borrados','success'); }
-
+function deleteTx(id) {
+  if (navigator.vibrate) navigator.vibrate(30);
+  if (confirm('¿Eliminar este movimiento?')) {
+    state.transactions = state.transactions.filter(t => t.id !== id);
+    saveAll();
+    renderMovimientos();
+    toast('Movimiento eliminado', 'success');
+  }
+}
 function editTx(id) {
-  const t = state.transactions.find(x => x.id === id);
-  if (!t) return;
-  switchTab('registrar');
+  const tx = state.transactions.find(t => t.id === id);
+  if (!tx) return;
+  if (navigator.vibrate) navigator.vibrate(15);
+  openTxSheet();
+  
   setTimeout(() => {
     window._editingTxId = id;
-    document.getElementById('txType').value = t.type;
+    document.getElementById('txType').value = tx.type;
     onTxTypeChange();
-    document.getElementById('txDate').value = t.date;
-    document.getElementById('txDesc').value = t.description || '';
-    if (t.type === 'transfer') {
-      document.getElementById('txFromAcct').value = t.account;
-      document.getElementById('txToAcct').value = t.toAccount;
-      document.getElementById('txAmountT').value = fmt(t.amount);
-      document.getElementById('txAmountT').dataset.val = t.amount;
+    document.getElementById('txDate').value = tx.date;
+    document.getElementById('txDesc').value = tx.description || '';
+    if (tx.type === 'transfer') {
+      document.getElementById('txFromAcct').value = tx.account;
+      document.getElementById('txToAcct').value = tx.toAccount;
+      document.getElementById('txAmountT').value = fmt(tx.amount);
+      document.getElementById('txAmountT').dataset.val = tx.amount;
     } else {
-      document.getElementById('txCat').value = t.category;
+      document.getElementById('txCat').value = tx.category;
       onTxCatChange();
-      document.getElementById('txSub').value = t.subcategory;
-      document.getElementById('txAmount').value = fmt(t.amount);
-      document.getElementById('txAmount').dataset.val = t.amount;
-      window._selAcct = t.account;
+      document.getElementById('txSub').value = tx.subcategory;
+      document.getElementById('txAmount').value = fmt(tx.amount);
+      document.getElementById('txAmount').dataset.val = tx.amount;
+      window._selAcct = tx.account;
       renderAccountPills();
     }
     const btn = document.getElementById('saveTxBtn');
     if (btn) { btn.textContent = 'Actualizar Movimiento'; btn.classList.replace('btn-primary', 'btn-amber'); }
   }, 150);
 }
+function deleteAllMonth() { if(!confirm('Borrar TODOS los movimientos de este mes?'))return; state.transactions=state.transactions.filter(t=>!t.date.startsWith(state.currentMonth));saveAll();renderMovimientos();toast('Borrados','success'); }
 
 // ---------- Configuracion ----------
 function renderConfiguracion() {
@@ -1469,11 +1501,7 @@ function resetAll() {
 
 // ---------- Más bottom sheet ----------
 function fabNew() { 
-  switchTab('registrar'); 
-  setTimeout(function(){ 
-    if(document.getElementById('txType').value === 'transfer') showNumpad('txAmountT');
-    else showNumpad('txAmount'); 
-  }, 200); 
+  openTxSheet();
 }
 function toggleMoreSheet() {
   var overlay = document.getElementById('moreOverlay');
@@ -1516,18 +1544,33 @@ document.addEventListener('touchmove', function(e) {
   }
 }, { passive: true });
 document.addEventListener('touchend', function() { _ptrState.startY = 0; _ptrState.pulling = false; }, { passive: true });
+function renderCurrentTab() {
+  const sec = state.currentTab;
+  if (sec === 'inicio') renderInicio();
+  else if (sec === 'movimientos') renderMovimientos();
+  else if (sec === 'dashboard') renderDashboard();
+  else if (sec === 'planificacion') renderPlanificacion();
+  else if (sec === 'resumen') renderResumen();
+  else if (sec === 'proyeccion') renderProyeccion();
+  else if (sec === 'configuracion') renderConfiguracion();
+  else if (sec === 'datos') renderDatos();
+}
+
 // ---------- Tab transitions ----------
 var _tabSwitching = false;
-function switchTab(tab) {
+function switchTab(sec) {
   if (_tabSwitching) return;
-  state.currentTab = tab;
-  document.querySelectorAll('.tabs-desktop button, .tabs-mobile button').forEach(function(b) { b.classList.remove('active'); });
-  document.querySelectorAll('[data-tab="'+tab+'"]').forEach(function(b) { b.classList.add('active'); });
+  state.currentTab = sec;
+  document.querySelectorAll('.tabs-desktop button, .tabs-mobile button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('[data-tab="'+sec+'"]').forEach(b => b.classList.add('active'));
   updateBudgetBadge();
-  var main = document.getElementById('main');
+  
+  // Fade effect
+  const main = document.getElementById('main');
   _tabSwitching = true;
   main.classList.add('fade-out');
-  setTimeout(function() {
+  
+  setTimeout(() => {
     renderCurrentTab();
     main.classList.remove('fade-out');
     _tabSwitching = false;
